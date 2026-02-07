@@ -1,0 +1,775 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Settings & Configuration - Bug Hunter Framework</title>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="logo">BUG HUNTER</div>
+                <div class="logo-subtitle">Security Framework v1.0</div>
+            </div>
+            
+            <nav class="nav-menu">
+                <div class="nav-section">
+                    <div class="nav-section-title">Main</div>
+                    <a href="index.html" class="nav-link">
+                        <span class="nav-icon">◈</span>
+                        <span>Dashboard</span>
+                    </a>
+                </div>
+                
+                <div class="nav-section">
+                    <div class="nav-section-title">Testing Phases</div>
+                    <a href="recon.html" class="nav-link">
+                        <span class="nav-icon">◉</span>
+                        <span>Phase 1: Recon</span>
+                    </a>
+                    <a href="baseline.html" class="nav-link">
+                        <span class="nav-icon">◉</span>
+                        <span>Phase 2: Baseline</span>
+                    </a>
+                    <a href="testing.html" class="nav-link">
+                        <span class="nav-icon">◉</span>
+                        <span>Phase 3: Testing</span>
+                    </a>
+                    <a href="correlation.html" class="nav-link">
+                        <span class="nav-icon">◉</span>
+                        <span>Phase 4: Correlation</span>
+                    </a>
+                    <a href="reports.html" class="nav-link">
+                        <span class="nav-icon">◉</span>
+                        <span>Phase 5: Reports</span>
+                    </a>
+                </div>
+                
+                <div class="nav-section">
+                    <div class="nav-section-title">System</div>
+                    <a href="settings.html" class="nav-link">
+                        <span class="nav-icon">⚙</span>
+                        <span>Settings</span>
+                    </a>
+                </div>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Top Header -->
+            <header class="top-header">
+                <div class="breadcrumb">
+                    <a href="index.html" class="breadcrumb-item">Home</a>
+                    <span class="breadcrumb-separator">/</span>
+                    <span class="breadcrumb-item">Settings</span>
+                </div>
+                
+                <div class="header-actions">
+                    <div class="status-indicator">
+                        <span class="status-dot"></span>
+                        <span>Configuration</span>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Page Content -->
+            <div class="content-container">
+                <!-- Page Header -->
+                <div class="page-header">
+                    <h1 class="page-title">⚙ Settings & Configuration</h1>
+                    <p class="page-subtitle">Manage scope, integrations, and framework preferences</p>
+                </div>
+
+                <!-- Settings Tabs -->
+                <div class="tabs">
+                    <button class="tab active" data-tab="scope-content">Scope Management</button>
+                    <button class="tab" data-tab="auth-content">Authorization</button>
+                    <button class="tab" data-tab="integrations-content">Integrations</button>
+                    <button class="tab" data-tab="notifications-content">Notifications</button>
+                    <button class="tab" data-tab="appearance-content">Appearance</button>
+                    <button class="tab" data-tab="advanced-content">Advanced</button>
+                </div>
+
+                <!-- Scope Management Tab -->
+                <div id="scope-content" class="tab-content active">
+                    <div class="card glow-green">
+                        <div class="card-header">
+                            <h2 class="card-title">🎯 Target Scope Configuration</h2>
+                        </div>
+                        <div class="card-body">
+                            <div class="alert alert-warning mb-3">
+                                <span class="alert-icon">⚠</span>
+                                <div>
+                                    <strong>IMPORTANT:</strong> Only test targets you have explicit written authorization for. 
+                                    Unauthorized testing is illegal and unethical.
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="form-label">In-Scope Domains (one per line)</label>
+                                <textarea class="form-textarea" rows="6" id="inScope">example.com
+*.example.com
+api.example.com
+staging.example.com</textarea>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="form-label">Out-of-Scope Domains/Paths</label>
+                                <textarea class="form-textarea" rows="4" id="outScope">example.com/admin/*
+example.com/logout
+payments.example.com
+third-party.example.com</textarea>
+                            </div>
+
+                            <div class="grid grid-2">
+                                <div class="form-group">
+                                    <label class="form-label">Rate Limit (requests/second)</label>
+                                    <input type="number" class="form-input" value="10" min="1" max="100">
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Concurrent Threads</label>
+                                    <input type="number" class="form-input" value="5" min="1" max="20">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="form-label">Scope Notes</label>
+                                <textarea class="form-textarea" rows="3">- Do not test payment processing endpoints
+- Avoid high-traffic hours (9am-5pm EST)
+- Report critical findings within 24 hours</textarea>
+                            </div>
+
+                            <button class="btn btn-primary">
+                                <span>💾</span>
+                                <span>Save Scope Configuration</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Active Targets -->
+                    <div class="card">
+                        <div class="card-header">
+                            <h2 class="card-title">📋 Active Testing Targets</h2>
+                        </div>
+                        <div class="card-body">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Target</th>
+                                        <th>Program Type</th>
+                                        <th>Authorization</th>
+                                        <th>Valid Until</th>
+                                        <th>Status</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td class="monospace">example.com</td>
+                                        <td>Bug Bounty</td>
+                                        <td><span class="badge badge-success">✓ Verified</span></td>
+                                        <td class="monospace">2024-12-31</td>
+                                        <td><span class="badge badge-success">ACTIVE</span></td>
+                                        <td>
+                                            <button class="btn btn-secondary" style="padding: 0.5rem;">Edit</button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="monospace">api.testcorp.io</td>
+                                        <td>Pentest Engagement</td>
+                                        <td><span class="badge badge-success">✓ Verified</span></td>
+                                        <td class="monospace">2024-03-15</td>
+                                        <td><span class="badge badge-success">ACTIVE</span></td>
+                                        <td>
+                                            <button class="btn btn-secondary" style="padding: 0.5rem;">Edit</button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="monospace">staging.client.com</td>
+                                        <td>Private Program</td>
+                                        <td><span class="badge badge-warning">⏳ Pending</span></td>
+                                        <td class="monospace">2024-06-30</td>
+                                        <td><span class="badge badge-warning">PENDING</span></td>
+                                        <td>
+                                            <button class="btn btn-secondary" style="padding: 0.5rem;">Edit</button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                            <button class="btn btn-primary mt-3">
+                                <span>➕</span>
+                                <span>Add New Target</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Authorization Tab -->
+                <div id="auth-content" class="tab-content">
+                    <div class="card glow-green">
+                        <div class="card-header">
+                            <h2 class="card-title">📜 Authorization Documentation</h2>
+                        </div>
+                        <div class="card-body">
+                            <div class="alert alert-danger mb-3">
+                                <span class="alert-icon">⚠</span>
+                                <div>
+                                    <strong>LEGAL REQUIREMENT:</strong> Always obtain and maintain written authorization 
+                                    before conducting security testing. Store all authorization documents securely.
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="form-label">Upload Authorization Document</label>
+                                <input type="file" class="form-input" accept=".pdf,.doc,.docx">
+                                <div class="text-secondary mt-1" style="font-size: 0.875rem;">
+                                    Supported formats: PDF, DOC, DOCX (Max 10MB)
+                                </div>
+                            </div>
+
+                            <div class="grid grid-2">
+                                <div class="form-group">
+                                    <label class="form-label">Authorization Type</label>
+                                    <select class="form-select">
+                                        <option>Bug Bounty Program</option>
+                                        <option>Penetration Test Contract</option>
+                                        <option>Security Assessment Agreement</option>
+                                        <option>Written Permission Email</option>
+                                        <option>SOW (Statement of Work)</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Authorized By</label>
+                                    <input type="text" class="form-input" placeholder="Company Name / Contact Person">
+                                </div>
+                            </div>
+
+                            <div class="grid grid-2">
+                                <div class="form-group">
+                                    <label class="form-label">Valid From</label>
+                                    <input type="date" class="form-input">
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Valid Until</label>
+                                    <input type="date" class="form-input">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="form-label">Authorization Notes</label>
+                                <textarea class="form-textarea" rows="3" placeholder="Additional details, restrictions, or special conditions..."></textarea>
+                            </div>
+
+                            <button class="btn btn-primary">
+                                <span>📤</span>
+                                <span>Upload & Save Authorization</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Authorization History -->
+                    <div class="card">
+                        <div class="card-header">
+                            <h2 class="card-title">📚 Authorization Documents</h2>
+                        </div>
+                        <div class="card-body">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Target</th>
+                                        <th>Document Type</th>
+                                        <th>Authorized By</th>
+                                        <th>Valid Period</th>
+                                        <th>Status</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td class="monospace">example.com</td>
+                                        <td>Bug Bounty Program</td>
+                                        <td>Example Corp Security</td>
+                                        <td class="monospace">2024-01-01 → 2024-12-31</td>
+                                        <td><span class="badge badge-success">VALID</span></td>
+                                        <td>
+                                            <button class="btn btn-secondary" style="padding: 0.5rem;">View</button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="monospace">api.testcorp.io</td>
+                                        <td>Pentest Contract</td>
+                                        <td>TestCorp Legal Dept</td>
+                                        <td class="monospace">2024-02-01 → 2024-03-15</td>
+                                        <td><span class="badge badge-success">VALID</span></td>
+                                        <td>
+                                            <button class="btn btn-secondary" style="padding: 0.5rem;">View</button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Integrations Tab -->
+                <div id="integrations-content" class="tab-content">
+                    <div class="card">
+                        <div class="card-header">
+                            <h2 class="card-title">🔌 Platform Integrations</h2>
+                        </div>
+                        <div class="card-body">
+                            <!-- HackerOne -->
+                            <div class="card" style="background: var(--bg-secondary); margin-bottom: 1.5rem;">
+                                <div class="card-body">
+                                    <div class="flex-between mb-2">
+                                        <div>
+                                            <strong class="text-primary">HackerOne Integration</strong>
+                                            <div class="text-secondary" style="font-size: 0.875rem;">
+                                                Submit reports directly to HackerOne platform
+                                            </div>
+                                        </div>
+                                        <span class="badge badge-danger">DISCONNECTED</span>
+                                    </div>
+                                    <div class="form-group mt-3">
+                                        <label class="form-label">API Token</label>
+                                        <input type="password" class="form-input" placeholder="Enter HackerOne API token">
+                                    </div>
+                                    <button class="btn btn-primary">
+                                        <span>🔗</span>
+                                        <span>Connect HackerOne</span>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- Bugcrowd -->
+                            <div class="card" style="background: var(--bg-secondary); margin-bottom: 1.5rem;">
+                                <div class="card-body">
+                                    <div class="flex-between mb-2">
+                                        <div>
+                                            <strong class="text-primary">Bugcrowd Integration</strong>
+                                            <div class="text-secondary" style="font-size: 0.875rem;">
+                                                Connect to Bugcrowd bug bounty platform
+                                            </div>
+                                        </div>
+                                        <span class="badge badge-danger">DISCONNECTED</span>
+                                    </div>
+                                    <div class="form-group mt-3">
+                                        <label class="form-label">API Credentials</label>
+                                        <input type="password" class="form-input" placeholder="Enter Bugcrowd API key">
+                                    </div>
+                                    <button class="btn btn-primary">
+                                        <span>🔗</span>
+                                        <span>Connect Bugcrowd</span>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- Burp Suite -->
+                            <div class="card" style="background: var(--bg-secondary); margin-bottom: 1.5rem;">
+                                <div class="card-body">
+                                    <div class="flex-between mb-2">
+                                        <div>
+                                            <strong class="text-primary">Burp Suite Integration</strong>
+                                            <div class="text-secondary" style="font-size: 0.875rem;">
+                                                Import findings from Burp Suite scanner
+                                            </div>
+                                        </div>
+                                        <span class="badge badge-success">CONNECTED</span>
+                                    </div>
+                                    <div class="grid grid-2 mt-3">
+                                        <div class="form-group">
+                                            <label class="form-label">Burp API Host</label>
+                                            <input type="text" class="form-input" value="http://localhost:1337">
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="form-label">API Key</label>
+                                            <input type="password" class="form-input" value="••••••••••••">
+                                        </div>
+                                    </div>
+                                    <button class="btn btn-secondary">
+                                        <span>🔄</span>
+                                        <span>Sync Findings</span>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- OWASP ZAP -->
+                            <div class="card" style="background: var(--bg-secondary);">
+                                <div class="card-body">
+                                    <div class="flex-between mb-2">
+                                        <div>
+                                            <strong class="text-primary">OWASP ZAP Integration</strong>
+                                            <div class="text-secondary" style="font-size: 0.875rem;">
+                                                Import scan results from OWASP ZAP
+                                            </div>
+                                        </div>
+                                        <span class="badge badge-danger">DISCONNECTED</span>
+                                    </div>
+                                    <div class="form-group mt-3">
+                                        <label class="form-label">ZAP API Endpoint</label>
+                                        <input type="text" class="form-input" placeholder="http://localhost:8080">
+                                    </div>
+                                    <button class="btn btn-primary">
+                                        <span>🔗</span>
+                                        <span>Connect ZAP</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Notifications Tab -->
+                <div id="notifications-content" class="tab-content">
+                    <div class="card">
+                        <div class="card-header">
+                            <h2 class="card-title">🔔 Notification Preferences</h2>
+                        </div>
+                        <div class="card-body">
+                            <h3 style="color: var(--neon-green); margin-bottom: 1rem;">Email Notifications</h3>
+                            
+                            <div class="form-group">
+                                <label class="form-label">Email Address</label>
+                                <input type="email" class="form-input" value="researcher@example.com">
+                            </div>
+
+                            <div class="mb-3">
+                                <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer;">
+                                    <input type="checkbox" checked> 
+                                    <span>Critical vulnerabilities discovered</span>
+                                </label>
+                            </div>
+
+                            <div class="mb-3">
+                                <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer;">
+                                    <input type="checkbox" checked> 
+                                    <span>Scan completion notifications</span>
+                                </label>
+                            </div>
+
+                            <div class="mb-3">
+                                <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer;">
+                                    <input type="checkbox"> 
+                                    <span>Daily activity summary</span>
+                                </label>
+                            </div>
+
+                            <div class="mb-3">
+                                <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer;">
+                                    <input type="checkbox"> 
+                                    <span>Report submission confirmations</span>
+                                </label>
+                            </div>
+
+                            <h3 style="color: var(--neon-green); margin: 2rem 0 1rem;">Slack Integration</h3>
+                            
+                            <div class="form-group">
+                                <label class="form-label">Slack Webhook URL</label>
+                                <input type="text" class="form-input" placeholder="https://hooks.slack.com/services/...">
+                            </div>
+
+                            <div class="mb-3">
+                                <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer;">
+                                    <input type="checkbox"> 
+                                    <span>Send critical findings to Slack</span>
+                                </label>
+                            </div>
+
+                            <h3 style="color: var(--neon-green); margin: 2rem 0 1rem;">Discord Integration</h3>
+                            
+                            <div class="form-group">
+                                <label class="form-label">Discord Webhook URL</label>
+                                <input type="text" class="form-input" placeholder="https://discord.com/api/webhooks/...">
+                            </div>
+
+                            <div class="mb-3">
+                                <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer;">
+                                    <input type="checkbox"> 
+                                    <span>Send scan results to Discord</span>
+                                </label>
+                            </div>
+
+                            <button class="btn btn-primary mt-3">
+                                <span>💾</span>
+                                <span>Save Notification Settings</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Appearance Tab -->
+                <div id="appearance-content" class="tab-content">
+                    <div class="card">
+                        <div class="card-header">
+                            <h2 class="card-title">🎨 Appearance Customization</h2>
+                        </div>
+                        <div class="card-body">
+                            <h3 style="color: var(--neon-green); margin-bottom: 1rem;">Theme Selection</h3>
+                            
+                            <div class="grid grid-3 mb-3">
+                                <div class="card" style="background: var(--bg-secondary); border: 2px solid var(--neon-green); cursor: pointer;">
+                                    <div class="card-body text-center">
+                                        <div style="font-size: 2rem; margin-bottom: 0.5rem;">🌙</div>
+                                        <strong>Cyberpunk Dark</strong>
+                                        <div class="badge badge-success mt-2">ACTIVE</div>
+                                    </div>
+                                </div>
+
+                                <div class="card" style="background: var(--bg-secondary); cursor: pointer;">
+                                    <div class="card-body text-center">
+                                        <div style="font-size: 2rem; margin-bottom: 0.5rem;">🌞</div>
+                                        <strong>Matrix Green</strong>
+                                    </div>
+                                </div>
+
+                                <div class="card" style="background: var(--bg-secondary); cursor: pointer;">
+                                    <div class="card-body text-center">
+                                        <div style="font-size: 2rem; margin-bottom: 0.5rem;">💜</div>
+                                        <strong>Neon Purple</strong>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <h3 style="color: var(--neon-green); margin: 2rem 0 1rem;">Color Customization</h3>
+                            
+                            <div class="grid grid-2">
+                                <div class="form-group">
+                                    <label class="form-label">Primary Accent Color</label>
+                                    <input type="color" class="form-input" value="#00ff88">
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Secondary Accent Color</label>
+                                    <input type="color" class="form-input" value="#00d4ff">
+                                </div>
+                            </div>
+
+                            <h3 style="color: var(--neon-green); margin: 2rem 0 1rem;">Display Options</h3>
+                            
+                            <div class="mb-3">
+                                <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer;">
+                                    <input type="checkbox" checked> 
+                                    <span>Enable terminal animations</span>
+                                </label>
+                            </div>
+
+                            <div class="mb-3">
+                                <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer;">
+                                    <input type="checkbox" checked> 
+                                    <span>Show ASCII art on dashboard</span>
+                                </label>
+                            </div>
+
+                            <div class="mb-3">
+                                <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer;">
+                                    <input type="checkbox" checked> 
+                                    <span>Enable glow effects</span>
+                                </label>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="form-label">Font Size</label>
+                                <select class="form-select">
+                                    <option>Small</option>
+                                    <option selected>Medium</option>
+                                    <option>Large</option>
+                                    <option>Extra Large</option>
+                                </select>
+                            </div>
+
+                            <button class="btn btn-primary mt-3">
+                                <span>💾</span>
+                                <span>Save Appearance Settings</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Advanced Tab -->
+                <div id="advanced-content" class="tab-content">
+                    <div class="card">
+                        <div class="card-header">
+                            <h2 class="card-title">⚡ Advanced Configuration</h2>
+                        </div>
+                        <div class="card-body">
+                            <h3 style="color: var(--neon-green); margin-bottom: 1rem;">API Settings</h3>
+                            
+                            <div class="form-group">
+                                <label class="form-label">Backend API Endpoint</label>
+                                <input type="text" class="form-input" value="http://localhost:8000/api">
+                            </div>
+
+                            <div class="form-group">
+                                <label class="form-label">API Timeout (seconds)</label>
+                                <input type="number" class="form-input" value="30" min="5" max="300">
+                            </div>
+
+                            <h3 style="color: var(--neon-green); margin: 2rem 0 1rem;">Testing Engine</h3>
+                            
+                            <div class="grid grid-2">
+                                <div class="form-group">
+                                    <label class="form-label">Default User-Agent</label>
+                                    <input type="text" class="form-input" value="BugHunterFramework/1.0">
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Request Timeout (ms)</label>
+                                    <input type="number" class="form-input" value="5000">
+                                </div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer;">
+                                    <input type="checkbox" checked> 
+                                    <span>Follow redirects automatically</span>
+                                </label>
+                            </div>
+
+                            <div class="mb-3">
+                                <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer;">
+                                    <input type="checkbox" checked> 
+                                    <span>Verify SSL certificates</span>
+                                </label>
+                            </div>
+
+                            <div class="mb-3">
+                                <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer;">
+                                    <input type="checkbox"> 
+                                    <span>Enable debug logging</span>
+                                </label>
+                            </div>
+
+                            <h3 style="color: var(--neon-green); margin: 2rem 0 1rem;">Data & Privacy</h3>
+                            
+                            <div class="mb-3">
+                                <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer;">
+                                    <input type="checkbox" checked> 
+                                    <span>Store scan results locally</span>
+                                </label>
+                            </div>
+
+                            <div class="mb-3">
+                                <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer;">
+                                    <input type="checkbox"> 
+                                    <span>Enable anonymous usage statistics</span>
+                                </label>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="form-label">Data Retention Period (days)</label>
+                                <input type="number" class="form-input" value="90" min="1" max="365">
+                            </div>
+
+                            <h3 style="color: var(--neon-green); margin: 2rem 0 1rem;">Proxy Configuration</h3>
+                            
+                            <div class="form-group">
+                                <label class="form-label">HTTP Proxy</label>
+                                <input type="text" class="form-input" placeholder="http://proxy.example.com:8080">
+                            </div>
+
+                            <div class="mb-3">
+                                <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer;">
+                                    <input type="checkbox"> 
+                                    <span>Use proxy for all requests</span>
+                                </label>
+                            </div>
+
+                            <button class="btn btn-primary mt-3">
+                                <span>💾</span>
+                                <span>Save Advanced Settings</span>
+                            </button>
+
+                            <div class="alert alert-danger mt-3">
+                                <span class="alert-icon">⚠</span>
+                                <div>
+                                    <strong>Danger Zone:</strong>
+                                    <button class="btn btn-danger mt-2">
+                                        <span>🗑</span>
+                                        <span>Clear All Data</span>
+                                    </button>
+                                    <button class="btn btn-danger mt-2">
+                                        <span>🔄</span>
+                                        <span>Reset to Defaults</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- System Information -->
+                    <div class="card">
+                        <div class="card-header">
+                            <h2 class="card-title">ℹ System Information</h2>
+                        </div>
+                        <div class="card-body">
+                            <div class="grid grid-2">
+                                <div>
+                                    <div class="mb-2">
+                                        <strong>Framework Version:</strong>
+                                        <div class="monospace text-secondary">v1.0.0</div>
+                                    </div>
+                                    <div class="mb-2">
+                                        <strong>Build Date:</strong>
+                                        <div class="monospace text-secondary">2024-02-07</div>
+                                    </div>
+                                    <div class="mb-2">
+                                        <strong>License:</strong>
+                                        <div class="monospace text-secondary">MIT License</div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="mb-2">
+                                        <strong>Database Size:</strong>
+                                        <div class="monospace text-secondary">47.3 MB</div>
+                                    </div>
+                                    <div class="mb-2">
+                                        <strong>Total Findings:</strong>
+                                        <div class="monospace text-secondary">156 records</div>
+                                    </div>
+                                    <div class="mb-2">
+                                        <strong>Last Backup:</strong>
+                                        <div class="monospace text-secondary">2024-02-06 18:30</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <button class="btn btn-secondary mt-3">
+                                <span>🔍</span>
+                                <span>Check for Updates</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Save All Settings -->
+                <div class="card">
+                    <div class="card-body flex gap-2">
+                        <button class="btn btn-primary" onclick="saveAllSettings()">
+                            <span>💾</span>
+                            <span>Save All Settings</span>
+                        </button>
+                        <button class="btn btn-secondary">
+                            <span>↻</span>
+                            <span>Reload Settings</span>
+                        </button>
+                        <a href="index.html" class="btn btn-secondary">
+                            <span>🏠</span>
+                            <span>Return to Dashboard</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="../js/app.js"></script>
+    <script>
+        function saveAllSettings() {
+            BugHunter.showNotification('All settings saved successfully', 'success');
+        }
+    </script>
+</body>
+</html>

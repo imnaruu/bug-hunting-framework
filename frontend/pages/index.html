@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bug Hunter Framework - Dashboard</title>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="logo">BUG HUNTER</div>
+                <div class="logo-subtitle">Security Framework v1.0</div>
+            </div>
+            
+            <nav class="nav-menu">
+                <div class="nav-section">
+                    <div class="nav-section-title">Main</div>
+                    <a href="index.html" class="nav-link">
+                        <span class="nav-icon">◈</span>
+                        <span>Dashboard</span>
+                    </a>
+                </div>
+                
+                <div class="nav-section">
+                    <div class="nav-section-title">Testing Phases</div>
+                    <a href="recon.html" class="nav-link">
+                        <span class="nav-icon">◉</span>
+                        <span>Phase 1: Recon</span>
+                    </a>
+                    <a href="baseline.html" class="nav-link">
+                        <span class="nav-icon">◉</span>
+                        <span>Phase 2: Baseline</span>
+                    </a>
+                    <a href="testing.html" class="nav-link">
+                        <span class="nav-icon">◉</span>
+                        <span>Phase 3: Testing</span>
+                    </a>
+                    <a href="correlation.html" class="nav-link">
+                        <span class="nav-icon">◉</span>
+                        <span>Phase 4: Correlation</span>
+                    </a>
+                    <a href="reports.html" class="nav-link">
+                        <span class="nav-icon">◉</span>
+                        <span>Phase 5: Reports</span>
+                    </a>
+                </div>
+                
+                <div class="nav-section">
+                    <div class="nav-section-title">System</div>
+                    <a href="settings.html" class="nav-link">
+                        <span class="nav-icon">⚙</span>
+                        <span>Settings</span>
+                    </a>
+                </div>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Top Header -->
+            <header class="top-header">
+                <div class="breadcrumb">
+                    <span class="breadcrumb-item">Home</span>
+                    <span class="breadcrumb-separator">/</span>
+                    <span class="breadcrumb-item">Dashboard</span>
+                </div>
+                
+                <div class="header-actions">
+                    <div class="status-indicator">
+                        <span class="status-dot"></span>
+                        <span>System Online</span>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Page Content -->
+            <div class="content-container">
+                <!-- Legal Disclaimer -->
+                <div class="alert alert-warning">
+                    <span class="alert-icon">⚠</span>
+                    <div>
+                        <strong>AUTHORIZED USE ONLY:</strong> This framework is for authorized security testing only. 
+                        Ensure written permission before testing any system. Unauthorized access is illegal.
+                    </div>
+                </div>
+
+                <!-- ASCII Logo -->
+                <div class="ascii-art">
+╔══════════════════════════════════════════════════════════════════════╗
+║  ██████╗ ██╗   ██╗ ██████╗     ██╗  ██╗██╗   ██╗███╗   ██╗████████╗ ║
+║  ██╔══██╗██║   ██║██╔════╝     ██║  ██║██║   ██║████╗  ██║╚══██╔══╝ ║
+║  ██████╔╝██║   ██║██║  ███╗    ███████║██║   ██║██╔██╗ ██║   ██║    ║
+║  ██╔══██╗██║   ██║██║   ██║    ██╔══██║██║   ██║██║╚██╗██║   ██║    ║
+║  ██████╔╝╚██████╔╝╚██████╔╝    ██║  ██║╚██████╔╝██║ ╚████║   ██║    ║
+║  ╚═════╝  ╚═════╝  ╚═════╝     ╚═╝  ╚═╝ ╚═════╝ ╚═╝  ╚═══╝   ╚═╝    ║
+║                                                                      ║
+║            PROFESSIONAL BUG BOUNTY HUNTING FRAMEWORK                 ║
+╚══════════════════════════════════════════════════════════════════════╝
+                </div>
+
+                <!-- Page Header -->
+                <div class="page-header">
+                    <h1 class="page-title">Mission Control Dashboard</h1>
+                    <p class="page-subtitle">Centralized command center for professional security assessments</p>
+                </div>
+
+                <!-- Stats Cards -->
+                <div class="grid grid-4 mb-3">
+                    <div class="stat-card">
+                        <div class="stat-value" id="targetCount">0</div>
+                        <div class="stat-label">Active Targets</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value" id="findingCount">0</div>
+                        <div class="stat-label">Findings</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value" id="reportCount">0</div>
+                        <div class="stat-label">Reports</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value" id="criticalCount">0</div>
+                        <div class="stat-label">Critical Issues</div>
+                    </div>
+                </div>
+
+                <!-- System Status Panel -->
+                <div class="card glow-green">
+                    <div class="card-header">
+                        <h2 class="card-title">⚡ System Status</h2>
+                    </div>
+                    <div class="card-body">
+                        <div class="grid grid-3">
+                            <div>
+                                <strong>API Status:</strong> 
+                                <span class="badge badge-success">ONLINE</span>
+                            </div>
+                            <div>
+                                <strong>Framework Version:</strong> 
+                                <span class="monospace">v1.0.0</span>
+                            </div>
+                            <div>
+                                <strong>Last Update:</strong> 
+                                <span class="monospace">2024-02-07</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Navigation Cards to 6 Phases -->
+                <h2 class="page-title mt-3 mb-2">Testing Phases</h2>
+                <div class="grid grid-3">
+                    <a href="recon.html" class="nav-card">
+                        <div class="nav-card-icon">🔍</div>
+                        <div class="nav-card-title">Phase 1: Reconnaissance</div>
+                        <div class="nav-card-description">
+                            Scope verification, technology detection, version mapping, and risk hypothesis generation
+                        </div>
+                    </a>
+
+                    <a href="baseline.html" class="nav-card">
+                        <div class="nav-card-icon">📊</div>
+                        <div class="nav-card-title">Phase 2: Behavioral Baseline</div>
+                        <div class="nav-card-description">
+                            Response profiling, timing analysis, header inspection, and error pattern mapping
+                        </div>
+                    </a>
+
+                    <a href="testing.html" class="nav-card">
+                        <div class="nav-card-icon">⚔</div>
+                        <div class="nav-card-title">Phase 3: Interactive Testing</div>
+                        <div class="nav-card-description">
+                            Decision-tree guided vulnerability testing for XSS, SQLi, SSRF, SSTI and more
+                        </div>
+                    </a>
+
+                    <a href="correlation.html" class="nav-card">
+                        <div class="nav-card-icon">🔗</div>
+                        <div class="nav-card-title">Phase 4: Attack Chain Correlation</div>
+                        <div class="nav-card-description">
+                            Link findings into attack chains, assess business impact, and calculate confidence scores
+                        </div>
+                    </a>
+
+                    <a href="reports.html" class="nav-card">
+                        <div class="nav-card-icon">📝</div>
+                        <div class="nav-card-title">Phase 5: Report Builder</div>
+                        <div class="nav-card-description">
+                            Professional report generation with templates, evidence, and reproduction steps
+                        </div>
+                    </a>
+
+                    <a href="settings.html" class="nav-card">
+                        <div class="nav-card-icon">⚙</div>
+                        <div class="nav-card-title">Settings & Config</div>
+                        <div class="nav-card-description">
+                            Scope management, authorization documentation, integrations, and preferences
+                        </div>
+                    </a>
+                </div>
+
+                <!-- Recent Activity Feed -->
+                <h2 class="page-title mt-3 mb-2">Recent Activity</h2>
+                <div class="card">
+                    <div class="card-body">
+                        <div class="activity-item">
+                            <div class="activity-icon">✓</div>
+                            <div class="activity-content">
+                                <div class="activity-title">Reconnaissance completed for example.com</div>
+                                <div class="activity-time">2 minutes ago</div>
+                            </div>
+                        </div>
+                        <div class="activity-item">
+                            <div class="activity-icon">⚠</div>
+                            <div class="activity-content">
+                                <div class="activity-title">XSS vulnerability detected in search parameter</div>
+                                <div class="activity-time">15 minutes ago</div>
+                            </div>
+                        </div>
+                        <div class="activity-item">
+                            <div class="activity-icon">📄</div>
+                            <div class="activity-content">
+                                <div class="activity-title">Security report generated for target #42</div>
+                                <div class="activity-time">1 hour ago</div>
+                            </div>
+                        </div>
+                        <div class="activity-item">
+                            <div class="activity-icon">🔍</div>
+                            <div class="activity-content">
+                                <div class="activity-title">Baseline analysis completed successfully</div>
+                                <div class="activity-time">3 hours ago</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Quick Actions -->
+                <h2 class="page-title mt-3 mb-2">Quick Actions</h2>
+                <div class="card">
+                    <div class="card-body flex gap-2">
+                        <a href="recon.html" class="btn btn-primary">
+                            <span>🎯</span>
+                            <span>Start New Assessment</span>
+                        </a>
+                        <a href="reports.html" class="btn btn-secondary">
+                            <span>📊</span>
+                            <span>View Reports</span>
+                        </a>
+                        <button class="btn btn-secondary" onclick="location.reload()">
+                            <span>🔄</span>
+                            <span>Refresh Data</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="../js/app.js"></script>
+    <script>
+        // Animate stat counters on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            BugHunter.animateNumber(document.getElementById('targetCount'), 12, 1500);
+            BugHunter.animateNumber(document.getElementById('findingCount'), 47, 1500);
+            BugHunter.animateNumber(document.getElementById('reportCount'), 23, 1500);
+            BugHunter.animateNumber(document.getElementById('criticalCount'), 5, 1500);
+        });
+    </script>
+</body>
+</html>
