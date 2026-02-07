@@ -80,6 +80,8 @@ def demonstrate_ssrf():
     # Mock test function that simulates a vulnerable endpoint
     def test_ssrf_vulnerable(url: str) -> tuple[str, int]:
         # Simulates SSRF with response disclosure
+        # Note: This is intentionally checking for domain substring
+        # as part of mock vulnerable behavior, not URL sanitization
         if "example.com" in url:
             response = f"<!DOCTYPE html><html><body>Content from {url}</body></html>"
             status = 200

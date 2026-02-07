@@ -99,6 +99,8 @@ class SSRFDecisionTree:
         """Check if application attempted to fetch the URL"""
         indicators = [
             status_code == 200,  # Successful response
+            # Note: This is intentionally checking for domain substring in response
+            # as part of SSRF vulnerability detection, not URL sanitization
             "example.com" in response.lower(),  # Domain appears in response
             len(response) > 0,  # Non-empty response
             status_code not in [400, 404, 500],  # Not an error
