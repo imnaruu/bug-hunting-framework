@@ -8,7 +8,14 @@ from fastapi.responses import FileResponse
 import os
 
 from backend.config import settings
-from backend.api.routes import health, recon, baseline, testing, correlation, reports
+from backend.api.routes import (
+    health_router,
+    recon_router,
+    baseline_router,
+    testing_router,
+    correlation_router,
+    reports_router
+)
 
 # Create FastAPI app
 app = FastAPI(
@@ -29,12 +36,12 @@ app.add_middleware(
 )
 
 # Include API routers
-app.include_router(health.router, prefix="/api", tags=["Health"])
-app.include_router(recon.router, prefix="/api/recon", tags=["Reconnaissance"])
-app.include_router(baseline.router, prefix="/api/baseline", tags=["Baseline"])
-app.include_router(testing.router, prefix="/api/testing", tags=["Testing"])
-app.include_router(correlation.router, prefix="/api/correlate", tags=["Correlation"])
-app.include_router(reports.router, prefix="/api/reports", tags=["Reports"])
+app.include_router(health_router, prefix="/api")
+app.include_router(recon_router, prefix="/api")
+app.include_router(baseline_router, prefix="/api")
+app.include_router(testing_router, prefix="/api")
+app.include_router(correlation_router, prefix="/api")
+app.include_router(reports_router, prefix="/api")
 
 # Mount static frontend files
 frontend_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), "frontend")
