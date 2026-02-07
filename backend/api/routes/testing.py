@@ -114,9 +114,6 @@ async def run_xss_test(request: XSSTestRequest):
             except Exception as e:
                 return f"Error: {str(e)}"
         
-        # Initialize decision tree with test function
-        tree = XSSDecisionTree(test_function=lambda p: "")  # Placeholder, will use async
-        
         # Run manual decision tree logic for async context
         # Step 1: Check reflection
         marker = "xss_test_12345"
