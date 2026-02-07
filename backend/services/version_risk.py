@@ -7,7 +7,7 @@ Does NOT provide exploits - only suggests investigation areas based on version.
 
 from dataclasses import dataclass, field
 from typing import Dict, List, Optional
-from datetime import datetime, date
+from datetime import datetime, date, timezone
 from enum import Enum
 
 
@@ -283,7 +283,7 @@ class VersionRiskMapper:
         
         for eol_version, eol_date in eol_dates.items():
             if major_minor.startswith(eol_version) or major_minor == eol_version:
-                if eol_date < datetime.now().date():
+                if eol_date < datetime.now(timezone.utc).date():
                     hypothesis = RiskHypothesis(
                         technology=technology,
                         version=version,

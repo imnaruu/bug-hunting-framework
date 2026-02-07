@@ -6,7 +6,7 @@ and exploitation complexity. Provides confidence levels and detailed breakdowns.
 """
 
 from dataclasses import dataclass, field
-from typing import Dict, List, Optional
+from typing import Any, Dict, List, Optional
 from enum import Enum
 
 
@@ -387,7 +387,7 @@ class ConfidenceScorer:
                 "Document detailed step-by-step reproduction instructions"
             )
     
-    def get_score_breakdown(self, score: ConfidenceScore) -> Dict[str, any]:
+    def get_score_breakdown(self, score: ConfidenceScore) -> Dict[str, Any]:
         """
         Get detailed score breakdown.
         

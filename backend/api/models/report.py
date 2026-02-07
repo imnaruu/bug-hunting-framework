@@ -68,8 +68,8 @@ class Report(BaseModel):
     version: str = "1.0"
     
     # Timestamps
-    created_at: datetime = Field(default_factory=datetime.now)
-    updated_at: datetime = Field(default_factory=datetime.now)
+    created_at: datetime = Field(default_factory=lambda: datetime.now())
+    updated_at: datetime = Field(default_factory=lambda: datetime.now())
     submitted_at: Optional[datetime] = None
     
     # Retest

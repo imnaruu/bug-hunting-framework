@@ -75,8 +75,8 @@ class Finding(BaseModel):
     remediation_complexity: Optional[str] = None
     
     # Timestamps
-    discovered_at: datetime = Field(default_factory=datetime.now)
-    updated_at: datetime = Field(default_factory=datetime.now)
+    discovered_at: datetime = Field(default_factory=lambda: datetime.now())
+    updated_at: datetime = Field(default_factory=lambda: datetime.now())
     verified_at: Optional[datetime] = None
     
     # Status

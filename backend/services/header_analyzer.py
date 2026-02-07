@@ -6,7 +6,7 @@ and identifies information disclosure issues.
 """
 
 from dataclasses import dataclass, field
-from typing import Dict, List, Optional, Set
+from typing import Any, Dict, List, Optional, Set
 from enum import Enum
 import re
 
@@ -393,7 +393,7 @@ class HeaderAnalyzer:
         
         result.security_score = max(0.0, min(100.0, base_score))
     
-    def get_summary(self, result: HeaderAnalysisResult) -> Dict[str, any]:
+    def get_summary(self, result: HeaderAnalysisResult) -> Dict[str, Any]:
         """
         Get human-readable summary of analysis.
         

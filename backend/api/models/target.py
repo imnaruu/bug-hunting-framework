@@ -32,8 +32,8 @@ class Target(BaseModel):
     scope_type: ScopeType = ScopeType.WHITELIST
     authorization_status: AuthorizationStatus = AuthorizationStatus.UNKNOWN
     authorization_doc: Optional[str] = None
-    created_at: datetime = Field(default_factory=datetime.now)
-    updated_at: datetime = Field(default_factory=datetime.now)
+    created_at: datetime = Field(default_factory=lambda: datetime.now())
+    updated_at: datetime = Field(default_factory=lambda: datetime.now())
     tags: List[str] = Field(default_factory=list)
     metadata: Dict[str, Any] = Field(default_factory=dict)
 

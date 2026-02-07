@@ -6,7 +6,7 @@ Uses statistical analysis to identify deviations from baseline behavior.
 """
 
 from dataclasses import dataclass, field
-from typing import Dict, List, Optional, Set
+from typing import Any, Dict, List, Optional, Set
 from datetime import datetime
 import statistics
 from enum import Enum
@@ -32,7 +32,7 @@ class ResponseProfile:
     response_time: float  # seconds
     content_length: int
     headers: Dict[str, str]
-    timestamp: datetime = field(default_factory=datetime.now)
+    timestamp: datetime = field(default_factory=lambda: datetime.now())
     content_sample: str = ""
     error_indicators: List[str] = field(default_factory=list)
 
@@ -60,8 +60,8 @@ class Anomaly:
     anomaly_type: AnomalyType
     description: str
     severity: str  # 'high', 'medium', 'low'
-    baseline_value: any
-    observed_value: any
+    baseline_value: Any
+    observed_value: Any
     deviation: float  # standard deviations from mean
     profile: ResponseProfile
     reasoning: str = ""
@@ -377,7 +377,7 @@ class BaselineEngine:
         parsed = urlparse(profile.url)
         return f"{profile.method}:{parsed.path}"
     
-    def get_baseline_summary(self, baseline_key: str) -> Optional[Dict[str, any]]:
+    def get_baseline_summary(self, baseline_key: str) -> Optional[Dict[str, Any]]:
         """
         Get summary of baseline statistics.
         

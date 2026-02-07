@@ -6,7 +6,7 @@ multi-step attack paths with business impact assessment.
 """
 
 from dataclasses import dataclass, field
-from typing import Dict, List, Optional, Set, Tuple
+from typing import Any, Dict, List, Optional, Set, Tuple
 from enum import Enum
 from datetime import datetime
 
@@ -44,9 +44,9 @@ class Finding:
     severity: str  # 'critical', 'high', 'medium', 'low'
     description: str
     affected_url: str
-    timestamp: datetime = field(default_factory=datetime.now)
+    timestamp: datetime = field(default_factory=lambda: datetime.now())
     evidence: List[str] = field(default_factory=list)
-    metadata: Dict[str, any] = field(default_factory=dict)
+    metadata: Dict[str, Any] = field(default_factory=dict)
 
 
 @dataclass

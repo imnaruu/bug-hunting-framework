@@ -11,7 +11,7 @@ Uses headers, response patterns, and error messages - no active probing.
 """
 
 from dataclasses import dataclass, field
-from typing import Dict, List, Optional, Set
+from typing import Any, Dict, List, Optional, Set
 import re
 from collections import defaultdict
 
@@ -319,7 +319,7 @@ class TechDetector:
                 indicators[tech_name].append(f"Content pattern: {match.group(0)[:100]}")
                 break  # Only count first match per pattern
     
-    def get_summary(self, tech_stack: TechStack) -> Dict[str, any]:
+    def get_summary(self, tech_stack: TechStack) -> Dict[str, Any]:
         """
         Get human-readable summary of detected technologies.
         
