@@ -124,7 +124,7 @@
                                         <strong>Payload 1: Basic Alert</strong>
                                         <button class="btn btn-secondary" onclick="copyPayload('xss1')">Copy</button>
                                     </div>
-                                    <div class="code-block" id="xss1"><script>alert('XSS')</script></div>
+                                    <div class="code-block" id="xss1">&lt;script&gt;alert('XSS')&lt;/script&gt;</div>
                                 </div>
 
                                 <div class="mb-3">
@@ -132,7 +132,7 @@
                                         <strong>Payload 2: Event Handler</strong>
                                         <button class="btn btn-secondary" onclick="copyPayload('xss2')">Copy</button>
                                     </div>
-                                    <div class="code-block" id="xss2"><img src=x onerror=alert('XSS')></div>
+                                    <div class="code-block" id="xss2">&lt;img src=x onerror=alert('XSS')&gt;</div>
                                 </div>
 
                                 <div class="mb-3">
@@ -140,12 +140,17 @@
                                         <strong>Payload 3: Polyglot</strong>
                                         <button class="btn btn-secondary" onclick="copyPayload('xss3')">Copy</button>
                                     </div>
-                                    <div class="code-block" id="xss3">jaVasCript:/*-/*`/*\`/*'/*"/**/(/* */onerror=alert('XSS') )//%0D%0A%0d%0a//</stYle/</titLe/</teXtarEa/</scRipt/--!>\x3csVg/<sVg/oNloAd=alert('XSS')//>\x3e</div>
+                                    <div class="code-block" id="xss3">jaVasCript:/*-/*`/*\`/*'/*"/**/(/* */onerror=alert('XSS') )//%0D%0A%0d%0a//&lt;/stYle/&lt;/titLe/&lt;/teXtarEa/&lt;/scRipt/--!&gt;\x3csVg/&lt;sVg/oNloAd=alert('XSS')//&gt;\x3e</div>
                                 </div>
 
                                 <div class="form-group mt-3">
                                     <label class="form-label">Test Endpoint URL</label>
                                     <input type="text" class="form-input" placeholder="https://example.com/search?q=" id="xssEndpoint">
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label class="form-label">Parameter Name</label>
+                                    <input type="text" class="form-input" placeholder="q" id="xssParameter" value="q">
                                 </div>
 
                                 <button class="btn btn-primary" onclick="executeXSSTest()">
@@ -238,6 +243,11 @@
                                 <div class="form-group mt-3">
                                     <label class="form-label">Vulnerable Parameter URL</label>
                                     <input type="text" class="form-input" placeholder="https://example.com/user?id=" id="sqliEndpoint">
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label class="form-label">Parameter Name</label>
+                                    <input type="text" class="form-input" placeholder="id" id="sqliParameter" value="id">
                                 </div>
 
                                 <button class="btn btn-primary" onclick="executeSQLTest()">
@@ -377,11 +387,11 @@
                             <div class="mb-3">
                                 <strong>1. Proof of Concept HTML:</strong>
                                 <div class="code-block mt-2">
-<form action="https://example.com/api/update-email" method="POST">
-  <input type="hidden" name="email" value="attacker@evil.com">
-  <input type="submit" value="Click Me">
-</form>
-<script>document.forms[0].submit();</script>
+&lt;form action="https://example.com/api/update-email" method="POST"&gt;
+  &lt;input type="hidden" name="email" value="attacker@evil.com"&gt;
+  &lt;input type="submit" value="Click Me"&gt;
+&lt;/form&gt;
+&lt;script&gt;document.forms[0].submit();&lt;/script&gt;
                                 </div>
                             </div>
 
@@ -532,26 +542,114 @@
             BugHunter.showNotification('Payload copied to clipboard', 'success');
         }
 
-        function executeXSSTest() {
+        async function executeXSSTest() {
             const endpoint = document.getElementById('xssEndpoint').value;
+            const parameter = document.getElementById('xssParameter')?.value || 'q';
+            
+            if (!endpoint) {
+                BugHunter.showNotification('Please enter a test endpoint URL', 'error');
+                return;
+            }
+            
             BugHunter.clearTerminal('xssResults');
-            BugHunter.addTerminalLine('xssResults', `[00:00:01] Initiating XSS test on ${endpoint}`, 'info');
-            BugHunter.addTerminalLine('xssResults', '[00:00:02] Sending payload: <script>alert(\'XSS\')</script>', 'info');
-            BugHunter.addTerminalLine('xssResults', '[00:00:03] Response received: 200 OK', 'info');
-            BugHunter.addTerminalLine('xssResults', '[00:00:04] Analyzing response body...', 'info');
-            BugHunter.addTerminalLine('xssResults', '[00:00:05] ✓ VULNERABILITY CONFIRMED: Reflected XSS detected!', 'success');
-            BugHunter.addTerminalLine('xssResults', '[00:00:06] Payload executed in response without sanitization', 'success');
+            BugHunter.addTerminalLine('xssResults', `[START] Initiating XSS test on ${endpoint}`, 'info');
+            BugHunter.addTerminalLine('xssResults', `[INFO] Testing parameter: ${parameter}`, 'info');
+            
+            try {
+                // Generate a unique target ID
+                const targetId = 'test-' + Date.now();
+                
+                // Call the XSS testing API
+                BugHunter.addTerminalLine('xssResults', '[STEP 1/3] Calling XSS testing API...', 'info');
+                const result = await BugHunter.testXSS(targetId, endpoint, parameter, 'html');
+                
+                BugHunter.addTerminalLine('xssResults', '[STEP 2/3] Analyzing response...', 'info');
+                
+                // Display results
+                if (result.steps && result.steps.length > 0) {
+                    result.steps.forEach((step, index) => {
+                        const logType = step.result.includes('✓') ? 'success' : 
+                                       step.result.includes('✗') ? 'error' : 'info';
+                        BugHunter.addTerminalLine('xssResults', 
+                            `[STEP ${index + 1}] ${step.description}: ${step.result}`, 
+                            logType);
+                    });
+                }
+                
+                BugHunter.addTerminalLine('xssResults', '[STEP 3/3] Test complete', 'info');
+                
+                if (result.vulnerability_found) {
+                    BugHunter.addTerminalLine('xssResults', 
+                        `[✓] VULNERABILITY CONFIRMED: XSS detected! (Confidence: ${result.confidence})`, 
+                        'success');
+                    BugHunter.showNotification('XSS vulnerability found!', 'success');
+                } else {
+                    BugHunter.addTerminalLine('xssResults', 
+                        '[✗] No XSS vulnerability detected', 
+                        'warning');
+                    BugHunter.showNotification('No vulnerability found', 'info');
+                }
+                
+            } catch (error) {
+                BugHunter.addTerminalLine('xssResults', `[ERROR] ${error.message}`, 'error');
+                BugHunter.showNotification('XSS test failed: ' + error.message, 'error');
+                console.error('XSS test error:', error);
+            }
         }
 
-        function executeSQLTest() {
+        async function executeSQLTest() {
             const endpoint = document.getElementById('sqliEndpoint').value;
+            const parameter = document.getElementById('sqliParameter')?.value || 'id';
+            
+            if (!endpoint) {
+                BugHunter.showNotification('Please enter a test endpoint URL', 'error');
+                return;
+            }
+            
             BugHunter.clearTerminal('sqliResults');
-            BugHunter.addTerminalLine('sqliResults', `[00:00:01] Testing SQL injection on ${endpoint}`, 'info');
-            BugHunter.addTerminalLine('sqliResults', '[00:00:02] Baseline response time: 247ms', 'info');
-            BugHunter.addTerminalLine('sqliResults', '[00:00:03] Sending payload: \' OR \'1\'=\'1', 'info');
-            BugHunter.addTerminalLine('sqliResults', '[00:00:08] Response time: 5,247ms (ANOMALY!)', 'warning');
-            BugHunter.addTerminalLine('sqliResults', '[00:00:09] SQL error in response: "ER_PARSE_ERROR"', 'error');
-            BugHunter.addTerminalLine('sqliResults', '[00:00:10] ✓ VULNERABILITY CONFIRMED: SQL Injection detected!', 'success');
+            BugHunter.addTerminalLine('sqliResults', `[START] Testing SQL injection on ${endpoint}`, 'info');
+            BugHunter.addTerminalLine('sqliResults', `[INFO] Testing parameter: ${parameter}`, 'info');
+            
+            try {
+                // Generate a unique target ID
+                const targetId = 'test-' + Date.now();
+                
+                // Call the SQLi testing API
+                BugHunter.addTerminalLine('sqliResults', '[STEP 1/3] Calling SQLi testing API...', 'info');
+                const result = await BugHunter.testSQLi(targetId, endpoint, parameter);
+                
+                BugHunter.addTerminalLine('sqliResults', '[STEP 2/3] Analyzing response...', 'info');
+                
+                // Display results
+                if (result.steps && result.steps.length > 0) {
+                    result.steps.forEach((step, index) => {
+                        const logType = step.result.includes('✓') ? 'success' : 
+                                       step.result.includes('✗') ? 'error' : 'info';
+                        BugHunter.addTerminalLine('sqliResults', 
+                            `[STEP ${index + 1}] ${step.description}: ${step.result}`, 
+                            logType);
+                    });
+                }
+                
+                BugHunter.addTerminalLine('sqliResults', '[STEP 3/3] Test complete', 'info');
+                
+                if (result.vulnerability_found) {
+                    BugHunter.addTerminalLine('sqliResults', 
+                        `[✓] VULNERABILITY CONFIRMED: SQL Injection detected! (Confidence: ${result.confidence})`, 
+                        'success');
+                    BugHunter.showNotification('SQL Injection vulnerability found!', 'success');
+                } else {
+                    BugHunter.addTerminalLine('sqliResults', 
+                        '[✗] No SQL injection vulnerability detected', 
+                        'warning');
+                    BugHunter.showNotification('No vulnerability found', 'info');
+                }
+                
+            } catch (error) {
+                BugHunter.addTerminalLine('sqliResults', `[ERROR] ${error.message}`, 'error');
+                BugHunter.showNotification('SQLi test failed: ' + error.message, 'error');
+                console.error('SQLi test error:', error);
+            }
         }
     </script>
 </body>
