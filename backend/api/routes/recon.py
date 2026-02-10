@@ -9,6 +9,7 @@ from pydantic import BaseModel, Field
 from typing import List, Dict, Any, Optional
 from datetime import datetime
 import uuid
+import httpx
 
 from backend.services.tech_detector import TechDetector
 from backend.services.version_risk import VersionRiskMapper
@@ -94,11 +95,25 @@ async def detect_technologies(request: TechnologyDetectionRequest):
     try:
         detector = TechDetector()
         
+        # If headers and body are not provided, fetch the URL
+        headers = request.headers
+        body = request.response_body or ""
+        
+        if not headers or not body:
+            try:
+                async with httpx.AsyncClient(follow_redirects=True, timeout=10.0) as client:
+                    response = await client.get(request.url)
+                    headers = dict(response.headers)
+                    body = response.text
+            except Exception as fetch_error:
+                # If fetching fails, continue with empty headers/body
+                pass
+        
         # Run detection
         tech_stack = detector.detect(
             url=request.url,
-            headers=request.headers,
-            body=request.response_body or ""
+            headers=headers,
+            body=body
         )
         
         # Convert to dict format
