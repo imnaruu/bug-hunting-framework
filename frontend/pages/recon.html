@@ -400,12 +400,164 @@
 
     <script src="../js/app.js"></script>
     <script>
-        document.getElementById('targetForm').addEventListener('submit', (e) => {
+        let currentTargetId = null;
+        
+        // Handle form submission
+        document.getElementById('targetForm').addEventListener('submit', async (e) => {
             e.preventDefault();
             const url = document.getElementById('targetUrl').value;
-            BugHunter.addTerminalLine('reconTerminal', `[NEW] Starting reconnaissance for ${url}...`, 'success');
-            BugHunter.showNotification('Reconnaissance started for ' + url, 'info');
+            
+            // Generate target ID
+            currentTargetId = 'target-' + Date.now();
+            
+            // Clear terminal
+            BugHunter.clearTerminal('reconTerminal');
+            BugHunter.addTerminalLine('reconTerminal', `[START] Reconnaissance initiated for ${url}`, 'info');
+            BugHunter.addTerminalLine('reconTerminal', `[INFO] Target ID: ${currentTargetId}`, 'info');
+            
+            try {
+                // Step 1: Verify scope
+                BugHunter.addTerminalLine('reconTerminal', `[STEP 1/3] Verifying scope...`, 'info');
+                const scopeResult = await BugHunter.verifyScope(url);
+                
+                if (scopeResult.is_in_scope) {
+                    BugHunter.addTerminalLine('reconTerminal', `[✓] Scope verified: ${scopeResult.message}`, 'success');
+                    
+                    // Update scope verification card
+                    updateScopeStatus(scopeResult);
+                } else {
+                    BugHunter.addTerminalLine('reconTerminal', `[✗] Scope verification failed: ${scopeResult.message}`, 'error');
+                    BugHunter.showNotification('Target is not in scope!', 'error');
+                    return;
+                }
+                
+                // Step 2: Detect technologies
+                BugHunter.addTerminalLine('reconTerminal', `[STEP 2/3] Detecting technologies...`, 'info');
+                const techResult = await BugHunter.detectTechnologies(currentTargetId, url);
+                BugHunter.addTerminalLine('reconTerminal', `[✓] Technology detection complete`, 'success');
+                
+                // Display technologies
+                displayTechnologies(techResult.technologies);
+                
+                // Step 3: Map version risks
+                if (techResult.technologies && Object.values(techResult.technologies).some(arr => arr.length > 0)) {
+                    BugHunter.addTerminalLine('reconTerminal', `[STEP 3/3] Mapping version risks...`, 'info');
+                    
+                    // Collect all technologies for risk mapping
+                    const allTechs = [];
+                    Object.values(techResult.technologies).forEach(techList => {
+                        techList.forEach(tech => {
+                            if (tech.version) {
+                                allTechs.push({
+                                    name: tech.name,
+                                    version: tech.version,
+                                    category: tech.category
+                                });
+                            }
+                        });
+                    });
+                    
+                    if (allTechs.length > 0) {
+                        try {
+                            const riskResult = await BugHunter.mapVersionRisks(allTechs);
+                            BugHunter.addTerminalLine('reconTerminal', `[✓] Version risk mapping complete`, 'success');
+                            displayVersionRisks(riskResult.risks);
+                        } catch (err) {
+                            BugHunter.addTerminalLine('reconTerminal', `[!] Version risk mapping not available`, 'warning');
+                        }
+                    }
+                } else {
+                    BugHunter.addTerminalLine('reconTerminal', `[!] No technologies with versions detected`, 'warning');
+                }
+                
+                BugHunter.addTerminalLine('reconTerminal', `[COMPLETE] Reconnaissance finished successfully`, 'success');
+                BugHunter.showNotification('Reconnaissance complete!', 'success');
+                
+            } catch (error) {
+                BugHunter.addTerminalLine('reconTerminal', `[ERROR] ${error.message}`, 'error');
+                BugHunter.showNotification('Reconnaissance failed: ' + error.message, 'error');
+                console.error('Recon error:', error);
+            }
         });
+        
+        // Update scope verification display
+        function updateScopeStatus(scopeResult) {
+            // This would update the scope verification card with real data
+            console.log('Scope result:', scopeResult);
+        }
+        
+        // Display detected technologies
+        function displayTechnologies(technologies) {
+            const container = document.querySelector('.grid-3');
+            if (!container) return;
+            
+            // Clear existing content
+            container.innerHTML = '';
+            
+            // Display each category
+            const categories = {
+                'web_servers': { title: 'Web Server', icon: '🖥️' },
+                'languages': { title: 'Language', icon: '💻' },
+                'frameworks': { title: 'Framework', icon: '🔧' },
+                'template_engines': { title: 'Template Engine', icon: '📝' },
+                'api_styles': { title: 'API Style', icon: '🔌' }
+            };
+            
+            Object.entries(categories).forEach(([key, meta]) => {
+                const techs = technologies[key] || [];
+                const card = document.createElement('div');
+                card.className = 'card';
+                card.style.background = 'var(--bg-secondary)';
+                card.style.margin = '0';
+                
+                let content = `<div class="card-body"><strong class="text-primary">${meta.icon} ${meta.title}</strong><div class="mt-2">`;
+                
+                if (techs.length > 0) {
+                    techs.forEach(tech => {
+                        const confidencePercent = Math.round(tech.confidence * 100);
+                        content += `
+                            <div class="mb-1">
+                                <div class="monospace">${tech.name} ${tech.version || ''}</div>
+                                <div class="text-secondary" style="font-size: 0.85em;">Confidence: ${confidencePercent}%</div>
+                            </div>
+                        `;
+                    });
+                } else {
+                    content += '<div class="monospace text-secondary">Not detected</div>';
+                }
+                
+                content += '</div></div>';
+                card.innerHTML = content;
+                container.appendChild(card);
+            });
+        }
+        
+        // Display version risks
+        function displayVersionRisks(risks) {
+            const table = document.getElementById('versionRiskTable');
+            if (!table) {
+                BugHunter.addTerminalLine('reconTerminal', `[INFO] Found ${risks.length} version risks`, 'info');
+                return;
+            }
+            
+            const tbody = table.querySelector('tbody');
+            if (!tbody) return;
+            
+            tbody.innerHTML = '';
+            
+            risks.forEach(risk => {
+                const row = document.createElement('tr');
+                const severityClass = risk.severity.toLowerCase();
+                row.innerHTML = `
+                    <td class="monospace">${risk.technology}</td>
+                    <td class="monospace">${risk.version}</td>
+                    <td><span class="badge badge-${severityClass}">${risk.severity}</span></td>
+                    <td>${risk.risk_hypothesis}</td>
+                    <td>${risk.recommendation}</td>
+                `;
+                tbody.appendChild(row);
+            });
+        }
     </script>
 </body>
 </html>

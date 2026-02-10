@@ -282,19 +282,37 @@ async def verify_scope(request: ScopeVerificationRequest):
     try:
         validator = ScopeValidator()
         
-        # Verify scope
-        verification = validator.verify_scope(
-            url=request.url,
-            authorization_doc=request.authorization_doc
-        )
+        # Verify scope using is_in_scope method
+        is_in_scope, message, warnings = validator.is_in_scope(request.url)
+        
+        # Validate authorization doc if provided
+        auth_status = "unknown"
+        if request.authorization_doc:
+            auth_valid, auth_message = validator.validate_authorization_doc(request.authorization_doc)
+            auth_status = "authorized" if auth_valid else "denied"
+            if not auth_valid:
+                warnings.append(auth_message)
+        
+        # Get scope boundaries
+        scope_boundaries = validator.get_scope_boundaries()
+        
+        # Determine authorization status
+        from backend.api.models.target import AuthorizationStatus
+        if is_in_scope:
+            if request.authorization_doc:
+                authorization_status = AuthorizationStatus.AUTHORIZED if auth_status == "authorized" else AuthorizationStatus.PENDING
+            else:
+                authorization_status = AuthorizationStatus.PENDING
+        else:
+            authorization_status = AuthorizationStatus.DENIED
         
         return ScopeVerificationResponse(
             url=request.url,
-            is_in_scope=verification.get("in_scope", False),
-            authorization_status=verification.get("authorization_status", "unknown"),
-            warnings=verification.get("warnings", []),
-            scope_boundaries=verification.get("scope_boundaries", []),
-            message=verification.get("message", "Scope verification completed")
+            is_in_scope=is_in_scope,
+            authorization_status=authorization_status,
+            warnings=warnings,
+            scope_boundaries=scope_boundaries,
+            message=message
         )
         
     except Exception as e:

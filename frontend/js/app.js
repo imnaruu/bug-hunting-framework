@@ -158,13 +158,198 @@ async function mockApiCall(endpoint, delay = 1000) {
     });
 }
 
+// ============================================
+// API Integration Functions
+// ============================================
+
+const API_BASE_URL = window.location.origin + '/api';
+
+// Generic API call wrapper
+async function apiCall(endpoint, method = 'GET', data = null) {
+    const options = {
+        method,
+        headers: {
+            'Content-Type': 'application/json',
+        }
+    };
+    
+    if (data && (method === 'POST' || method === 'PUT')) {
+        options.body = JSON.stringify(data);
+    }
+    
+    try {
+        const response = await fetch(`${API_BASE_URL}${endpoint}`, options);
+        const responseData = await response.json();
+        
+        if (!response.ok) {
+            throw new Error(responseData.detail || 'API request failed');
+        }
+        
+        return responseData;
+    } catch (error) {
+        console.error(`API Error: ${endpoint}`, error);
+        throw error;
+    }
+}
+
+// Health check
+async function checkHealth() {
+    try {
+        const data = await apiCall('/health');
+        updateStatus(true);
+        return data;
+    } catch (error) {
+        updateStatus(false);
+        throw error;
+    }
+}
+
+// Recon API calls
+async function detectTechnologies(targetId, url) {
+    return await apiCall('/recon/detect', 'POST', {
+        target_id: targetId,
+        url: url
+    });
+}
+
+async function getReconResults(targetId) {
+    return await apiCall(`/recon/results/${targetId}`);
+}
+
+async function verifyScope(url, authorizationDoc = null) {
+    return await apiCall('/recon/scope/verify', 'POST', {
+        url: url,
+        authorization_doc: authorizationDoc
+    });
+}
+
+async function getScopedTargets() {
+    return await apiCall('/recon/scope/targets');
+}
+
+async function mapVersionRisks(technologies) {
+    return await apiCall('/recon/version-risk', 'POST', {
+        technologies: technologies
+    });
+}
+
+// Baseline API calls
+async function captureBaseline(targetId, url, sampleSize = 10) {
+    return await apiCall('/baseline/capture', 'POST', {
+        target_id: targetId,
+        url: url,
+        sample_size: sampleSize
+    });
+}
+
+async function getBaseline(targetId) {
+    return await apiCall(`/baseline/${targetId}`);
+}
+
+async function analyzeHeaders(url, headers) {
+    return await apiCall('/baseline/analyze-headers', 'POST', {
+        url: url,
+        headers: headers
+    });
+}
+
+// Testing API calls
+async function testXSS(targetId, url, parameter, context = 'html') {
+    return await apiCall('/testing/xss', 'POST', {
+        target_id: targetId,
+        url: url,
+        parameter: parameter,
+        context: context
+    });
+}
+
+async function testSQLi(targetId, url, parameter) {
+    return await apiCall('/testing/sqli', 'POST', {
+        target_id: targetId,
+        url: url,
+        parameter: parameter
+    });
+}
+
+async function testSSRF(targetId, url, parameter) {
+    return await apiCall('/testing/ssrf', 'POST', {
+        target_id: targetId,
+        url: url,
+        parameter: parameter
+    });
+}
+
+async function testSSTI(targetId, url, parameter, templateEngine = null) {
+    return await apiCall('/testing/ssti', 'POST', {
+        target_id: targetId,
+        url: url,
+        parameter: parameter,
+        template_engine: templateEngine
+    });
+}
+
+async function getFindings(targetId = null) {
+    const endpoint = targetId ? `/testing/findings?target_id=${targetId}` : '/testing/findings';
+    return await apiCall(endpoint);
+}
+
+// Correlation API calls
+async function correlateFindings(targetId) {
+    return await apiCall('/correlate', 'POST', {
+        target_id: targetId
+    });
+}
+
+async function getAttackChains(targetId = null) {
+    const endpoint = targetId ? `/correlate/chains?target_id=${targetId}` : '/correlate/chains';
+    return await apiCall(endpoint);
+}
+
+async function translateBusinessImpact(findingIds) {
+    return await apiCall('/correlate/impact', 'POST', {
+        finding_ids: findingIds
+    });
+}
+
+// Reports API calls
+async function generateReport(targetId, title, format = 'markdown') {
+    return await apiCall('/reports/generate', 'POST', {
+        target_id: targetId,
+        title: title,
+        format: format
+    });
+}
+
+async function getReports() {
+    return await apiCall('/reports');
+}
+
+async function getReport(reportId) {
+    return await apiCall(`/reports/${reportId}`);
+}
+
+async function logRetest(reportId, findingId, status, notes) {
+    return await apiCall('/reports/retest', 'POST', {
+        report_id: reportId,
+        finding_id: findingId,
+        status: status,
+        notes: notes
+    });
+}
+
+async function getConfidenceScore(findingId) {
+    return await apiCall(`/reports/confidence/${findingId}`);
+}
+
 // Initialize on page load
 document.addEventListener('DOMContentLoaded', () => {
     setActiveNav();
     initTabs();
     
-    // Update status
-    updateStatus(true);
+    // Check API health on load
+    checkHealth().catch(() => {
+        console.error('API health check failed');
+    });
     
     // Add event listener for mobile menu
     const menuBtn = document.getElementById('menuBtn');
@@ -185,5 +370,29 @@ window.BugHunter = {
     clearTerminal,
     showNotification,
     updateStatus,
-    mockApiCall
+    mockApiCall,
+    // API functions
+    apiCall,
+    checkHealth,
+    detectTechnologies,
+    getReconResults,
+    verifyScope,
+    getScopedTargets,
+    mapVersionRisks,
+    captureBaseline,
+    getBaseline,
+    analyzeHeaders,
+    testXSS,
+    testSQLi,
+    testSSRF,
+    testSSTI,
+    getFindings,
+    correlateFindings,
+    getAttackChains,
+    translateBusinessImpact,
+    generateReport,
+    getReports,
+    getReport,
+    logRetest,
+    getConfidenceScore
 };
