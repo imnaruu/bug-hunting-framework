@@ -276,8 +276,7 @@ async def verify_scope(request: ScopeVerificationRequest):
     """
     Verify if a target is in scope for testing.
     
-    Validates URLs against scope rules and authorization documentation
-    to prevent out-of-scope testing.
+    Validates URLs against scope rules to prevent out-of-scope testing.
     """
     try:
         validator = ScopeValidator()
@@ -285,31 +284,12 @@ async def verify_scope(request: ScopeVerificationRequest):
         # Verify scope using is_in_scope method
         is_in_scope, message, warnings = validator.is_in_scope(request.url)
         
-        # Validate authorization doc if provided
-        auth_status = "unknown"
-        if request.authorization_doc:
-            auth_valid, auth_message = validator.validate_authorization_doc(request.authorization_doc)
-            auth_status = "authorized" if auth_valid else "denied"
-            if not auth_valid:
-                warnings.append(auth_message)
-        
         # Get scope boundaries
         scope_boundaries = validator.get_scope_boundaries()
-        
-        # Determine authorization status
-        from backend.api.models.target import AuthorizationStatus
-        if is_in_scope:
-            if request.authorization_doc:
-                authorization_status = AuthorizationStatus.AUTHORIZED if auth_status == "authorized" else AuthorizationStatus.PENDING
-            else:
-                authorization_status = AuthorizationStatus.PENDING
-        else:
-            authorization_status = AuthorizationStatus.DENIED
         
         return ScopeVerificationResponse(
             url=request.url,
             is_in_scope=is_in_scope,
-            authorization_status=authorization_status,
             warnings=warnings,
             scope_boundaries=scope_boundaries,
             message=message
@@ -333,15 +313,10 @@ async def list_scoped_targets():
     try:
         target_list = list(targets.values())
         
-        # Filter to only authorized targets
-        scoped_targets = [
-            t for t in target_list 
-            if t.authorization_status.value in ["authorized", "pending"]
-        ]
-        
+        # Return all targets
         return TargetListResponse(
-            targets=scoped_targets,
-            total=len(scoped_targets)
+            targets=target_list,
+            total=len(target_list)
         )
         
     except Exception as e:

@@ -126,63 +126,37 @@
                     </div>
                 </div>
 
-                <!-- Scope Verification Status -->
-                <div class="grid grid-2">
-                    <div class="card">
-                        <div class="card-header">
-                            <h2 class="card-title">Scope Verification</h2>
-                            <span class="badge badge-success">VERIFIED</span>
-                        </div>
-                        <div class="card-body">
-                            <div class="mb-2">
-                                <strong>Authorization Status:</strong>
-                                <div class="mt-1">
-                                    <span class="badge badge-success">✓ Written Permission</span>
-                                    <span class="badge badge-success">✓ In-Scope Domain</span>
-                                </div>
-                            </div>
-                            <div class="mb-2">
-                                <strong>Scope Document:</strong>
-                                <div class="monospace text-secondary mt-1">authorization_example_com.pdf</div>
-                            </div>
-                            <div>
-                                <strong>Valid Until:</strong>
-                                <div class="monospace text-secondary mt-1">2024-12-31</div>
-                            </div>
-                        </div>
+                <!-- Scan Progress -->
+                <div class="card">
+                    <div class="card-header">
+                        <h2 class="card-title">Scan Progress</h2>
                     </div>
-
-                    <div class="card">
-                        <div class="card-header">
-                            <h2 class="card-title">Scan Progress</h2>
+                    <div class="card-body">
+                        <div class="mb-2">
+                            <div class="flex-between mb-1">
+                                <span>Technology Detection</span>
+                                <span class="badge badge-success">COMPLETE</span>
+                            </div>
+                            <div class="progress">
+                                <div class="progress-bar" style="width: 100%"></div>
+                            </div>
                         </div>
-                        <div class="card-body">
-                            <div class="mb-2">
-                                <div class="flex-between mb-1">
-                                    <span>Technology Detection</span>
-                                    <span class="badge badge-success">COMPLETE</span>
-                                </div>
-                                <div class="progress">
-                                    <div class="progress-bar" style="width: 100%"></div>
-                                </div>
+                        <div class="mb-2">
+                            <div class="flex-between mb-1">
+                                <span>Version Mapping</span>
+                                <span class="badge badge-success">COMPLETE</span>
                             </div>
-                            <div class="mb-2">
-                                <div class="flex-between mb-1">
-                                    <span>Version Mapping</span>
-                                    <span class="badge badge-success">COMPLETE</span>
-                                </div>
-                                <div class="progress">
-                                    <div class="progress-bar" style="width: 100%"></div>
-                                </div>
+                            <div class="progress">
+                                <div class="progress-bar" style="width: 100%"></div>
                             </div>
-                            <div>
-                                <div class="flex-between mb-1">
-                                    <span>CVE Analysis</span>
-                                    <span class="badge badge-info">RUNNING</span>
-                                </div>
-                                <div class="progress">
-                                    <div class="progress-bar" style="width: 65%"></div>
-                                </div>
+                        </div>
+                        <div>
+                            <div class="flex-between mb-1">
+                                <span>CVE Analysis</span>
+                                <span class="badge badge-info">RUNNING</span>
+                            </div>
+                            <div class="progress">
+                                <div class="progress-bar" style="width: 65%"></div>
                             </div>
                         </div>
                     </div>
@@ -363,7 +337,7 @@
                         <div class="terminal" id="reconTerminal">
                             <div class="terminal-line">[00:00:01] Initializing reconnaissance module...</div>
                             <div class="terminal-line">[00:00:02] Target: https://example.com</div>
-                            <div class="terminal-line">[00:00:03] Verifying scope authorization... OK</div>
+                            <div class="terminal-line">[00:00:03] Verifying scope... OK</div>
                             <div class="terminal-line">[00:00:05] Fingerprinting web server... nginx/1.18.0 detected</div>
                             <div class="terminal-line">[00:00:07] Analyzing HTTP headers...</div>
                             <div class="terminal-line">[00:00:08] Detecting backend technology... Node.js/Express detected</div>

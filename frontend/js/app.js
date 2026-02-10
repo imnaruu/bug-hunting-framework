@@ -216,10 +216,9 @@ async function getReconResults(targetId) {
     return await apiCall(`/recon/results/${targetId}`);
 }
 
-async function verifyScope(url, authorizationDoc = null) {
+async function verifyScope(url) {
     return await apiCall('/recon/scope/verify', 'POST', {
-        url: url,
-        authorization_doc: authorizationDoc
+        url: url
     });
 }
 

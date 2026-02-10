@@ -87,7 +87,6 @@
                 <!-- Settings Tabs -->
                 <div class="tabs">
                     <button class="tab active" data-tab="scope-content">Scope Management</button>
-                    <button class="tab" data-tab="auth-content">Authorization</button>
                     <button class="tab" data-tab="integrations-content">Integrations</button>
                     <button class="tab" data-tab="notifications-content">Notifications</button>
                     <button class="tab" data-tab="appearance-content">Appearance</button>
@@ -104,7 +103,7 @@
                             <div class="alert alert-warning mb-3">
                                 <span class="alert-icon">⚠</span>
                                 <div>
-                                    <strong>IMPORTANT:</strong> Only test targets you have explicit written authorization for. 
+                                    <strong>IMPORTANT:</strong> Only test targets you have explicit permission for. 
                                     Unauthorized testing is illegal and unethical.
                                 </div>
                             </div>
@@ -161,8 +160,6 @@ third-party.example.com</textarea>
                                     <tr>
                                         <th>Target</th>
                                         <th>Program Type</th>
-                                        <th>Authorization</th>
-                                        <th>Valid Until</th>
                                         <th>Status</th>
                                         <th>Actions</th>
                                     </tr>
@@ -171,8 +168,6 @@ third-party.example.com</textarea>
                                     <tr>
                                         <td class="monospace">example.com</td>
                                         <td>Bug Bounty</td>
-                                        <td><span class="badge badge-success">✓ Verified</span></td>
-                                        <td class="monospace">2024-12-31</td>
                                         <td><span class="badge badge-success">ACTIVE</span></td>
                                         <td>
                                             <button class="btn btn-secondary" style="padding: 0.5rem;">Edit</button>
@@ -181,8 +176,6 @@ third-party.example.com</textarea>
                                     <tr>
                                         <td class="monospace">api.testcorp.io</td>
                                         <td>Pentest Engagement</td>
-                                        <td><span class="badge badge-success">✓ Verified</span></td>
-                                        <td class="monospace">2024-03-15</td>
                                         <td><span class="badge badge-success">ACTIVE</span></td>
                                         <td>
                                             <button class="btn btn-secondary" style="padding: 0.5rem;">Edit</button>
@@ -191,8 +184,6 @@ third-party.example.com</textarea>
                                     <tr>
                                         <td class="monospace">staging.client.com</td>
                                         <td>Private Program</td>
-                                        <td><span class="badge badge-warning">⏳ Pending</span></td>
-                                        <td class="monospace">2024-06-30</td>
                                         <td><span class="badge badge-warning">PENDING</span></td>
                                         <td>
                                             <button class="btn btn-secondary" style="padding: 0.5rem;">Edit</button>
@@ -205,113 +196,6 @@ third-party.example.com</textarea>
                                 <span>➕</span>
                                 <span>Add New Target</span>
                             </button>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Authorization Tab -->
-                <div id="auth-content" class="tab-content">
-                    <div class="card glow-green">
-                        <div class="card-header">
-                            <h2 class="card-title">📜 Authorization Documentation</h2>
-                        </div>
-                        <div class="card-body">
-                            <div class="alert alert-danger mb-3">
-                                <span class="alert-icon">⚠</span>
-                                <div>
-                                    <strong>LEGAL REQUIREMENT:</strong> Always obtain and maintain written authorization 
-                                    before conducting security testing. Store all authorization documents securely.
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <label class="form-label">Upload Authorization Document</label>
-                                <input type="file" class="form-input" accept=".pdf,.doc,.docx">
-                                <div class="text-secondary mt-1" style="font-size: 0.875rem;">
-                                    Supported formats: PDF, DOC, DOCX (Max 10MB)
-                                </div>
-                            </div>
-
-                            <div class="grid grid-2">
-                                <div class="form-group">
-                                    <label class="form-label">Authorization Type</label>
-                                    <select class="form-select">
-                                        <option>Bug Bounty Program</option>
-                                        <option>Penetration Test Contract</option>
-                                        <option>Security Assessment Agreement</option>
-                                        <option>Written Permission Email</option>
-                                        <option>SOW (Statement of Work)</option>
-                                    </select>
-                                </div>
-                                <div class="form-group">
-                                    <label class="form-label">Authorized By</label>
-                                    <input type="text" class="form-input" placeholder="Company Name / Contact Person">
-                                </div>
-                            </div>
-
-                            <div class="grid grid-2">
-                                <div class="form-group">
-                                    <label class="form-label">Valid From</label>
-                                    <input type="date" class="form-input">
-                                </div>
-                                <div class="form-group">
-                                    <label class="form-label">Valid Until</label>
-                                    <input type="date" class="form-input">
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <label class="form-label">Authorization Notes</label>
-                                <textarea class="form-textarea" rows="3" placeholder="Additional details, restrictions, or special conditions..."></textarea>
-                            </div>
-
-                            <button class="btn btn-primary">
-                                <span>📤</span>
-                                <span>Upload & Save Authorization</span>
-                            </button>
-                        </div>
-                    </div>
-
-                    <!-- Authorization History -->
-                    <div class="card">
-                        <div class="card-header">
-                            <h2 class="card-title">📚 Authorization Documents</h2>
-                        </div>
-                        <div class="card-body">
-                            <table class="table">
-                                <thead>
-                                    <tr>
-                                        <th>Target</th>
-                                        <th>Document Type</th>
-                                        <th>Authorized By</th>
-                                        <th>Valid Period</th>
-                                        <th>Status</th>
-                                        <th>Actions</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td class="monospace">example.com</td>
-                                        <td>Bug Bounty Program</td>
-                                        <td>Example Corp Security</td>
-                                        <td class="monospace">2024-01-01 → 2024-12-31</td>
-                                        <td><span class="badge badge-success">VALID</span></td>
-                                        <td>
-                                            <button class="btn btn-secondary" style="padding: 0.5rem;">View</button>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td class="monospace">api.testcorp.io</td>
-                                        <td>Pentest Contract</td>
-                                        <td>TestCorp Legal Dept</td>
-                                        <td class="monospace">2024-02-01 → 2024-03-15</td>
-                                        <td><span class="badge badge-success">VALID</span></td>
-                                        <td>
-                                            <button class="btn btn-secondary" style="padding: 0.5rem;">View</button>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
                         </div>
                     </div>
                 </div>
