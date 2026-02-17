@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Production Scan Demo - Bug Hunter Framework</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <style>
+        .demo-container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+        .scan-form {
+            margin-bottom: 2rem;
+        }
+        .progress-section {
+            display: none;
+            margin-bottom: 2rem;
+        }
+        .progress-section.active {
+            display: block;
+        }
+        .results-section {
+            display: none;
+        }
+        .results-section.active {
+            display: block;
+        }
+        .vulnerability-card {
+            background: #1a1a2e;
+            border: 1px solid #00ff88;
+            border-radius: 8px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+        }
+        .suppressed-finding {
+            background: #1a1a2e;
+            border: 1px solid #ffc107;
+            border-radius: 8px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="demo-container">
+        <div class="card glow-green">
+            <div class="card-header">
+                <h1 class="card-title">🔬 Production Scan Demo</h1>
+                <span class="badge badge-success">REAL EXECUTION</span>
+            </div>
+            <div class="card-body">
+                <div class="alert alert-info mb-3">
+                    <span class="alert-icon">ℹ</span>
+                    <div>
+                        <strong>Production-Grade Scan Engine</strong><br>
+                        • 15+ baseline samples enforced<br>
+                        • Multi-signal validation (4 signals)<br>
+                        • 3x reproducibility requirement<br>
+                        • False positive suppression<br>
+                        • NO simulation or Math.random()
+                    </div>
+                </div>
+
+                <!-- Scan Form -->
+                <div class="scan-form">
+                    <div class="form-group">
+                        <label class="form-label">Target URL</label>
+                        <input type="text" class="form-input" id="targetUrl" 
+                               value="http://testphp.vulnweb.com/" 
+                               placeholder="http://example.com">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Test Parameters (comma-separated)</label>
+                        <input type="text" class="form-input" id="testParams" 
+                               value="artist,name,cat" 
+                               placeholder="id,name,search">
+                    </div>
+                    <button class="btn btn-primary" id="startScanBtn" onclick="startProductionScan()">
+                        <span>🚀</span>
+                        <span>Start Production Scan</span>
+                    </button>
+                </div>
+
+                <!-- Progress Section -->
+                <div class="progress-section" id="progressSection">
+                    <h2 class="card-title mb-2">📊 Scan Progress</h2>
+                    <div class="mb-3">
+                        <div class="flex-between mb-1">
+                            <span id="phaseText">Initializing...</span>
+                            <span id="progressPercent">0%</span>
+                        </div>
+                        <div class="progress">
+                            <div class="progress-bar" id="progressBar" style="width: 0%"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="card mt-2">
+                        <div class="card-header">
+                            <h3 class="card-title">📡 Real-Time Logs</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="terminal" id="scanTerminal"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Results Section -->
+                <div class="results-section" id="resultsSection">
+                    <h2 class="card-title mb-3">✅ Scan Results</h2>
+                    
+                    <div class="card mb-3">
+                        <div class="card-header">
+                            <h3 class="card-title">🎯 Overview</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="grid grid-3">
+                                <div>
+                                    <strong>Confirmed Vulnerabilities:</strong>
+                                    <div class="monospace" id="confirmedCount" style="color: #ff3366;">0</div>
+                                </div>
+                                <div>
+                                    <strong>Suppressed Findings:</strong>
+                                    <div class="monospace" id="suppressedCount" style="color: #ffc107;">0</div>
+                                </div>
+                                <div>
+                                    <strong>Overall Confidence:</strong>
+                                    <div class="monospace" id="overallConfidence" style="color: #00ff88;">0%</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card mb-3">
+                        <div class="card-header">
+                            <h3 class="card-title">📈 Baseline Metrics</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="grid grid-2">
+                                <div>
+                                    <strong>Sample Count:</strong>
+                                    <span class="monospace" id="sampleCount">0</span>
+                                </div>
+                                <div>
+                                    <strong>Mean Response Time:</strong>
+                                    <span class="monospace" id="meanTime">0s</span>
+                                </div>
+                                <div>
+                                    <strong>Std Dev Time:</strong>
+                                    <span class="monospace" id="stddevTime">0s</span>
+                                </div>
+                                <div>
+                                    <strong>Mean Content Length:</strong>
+                                    <span class="monospace" id="meanLength">0</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="vulnerabilitiesContainer"></div>
+                    <div id="suppressedContainer"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="../js/app.js"></script>
+    <script>
+        let currentScanId = null;
+
+        async function startProductionScan() {
+            const targetUrl = document.getElementById('targetUrl').value;
+            const params = document.getElementById('testParams').value.split(',').map(p => p.trim());
+            
+            if (!targetUrl) {
+                BugHunter.showNotification('Please enter a target URL', 'error');
+                return;
+            }
+
+            // Clear previous results
+            document.getElementById('progressSection').classList.add('active');
+            document.getElementById('resultsSection').classList.remove('active');
+            BugHunter.clearTerminal('scanTerminal');
+            
+            // Disable button
+            document.getElementById('startScanBtn').disabled = true;
+
+            try {
+                // Start production scan
+                BugHunter.addTerminalLine('scanTerminal', '[INIT] Starting production scan...', 'info');
+                const response = await BugHunter.startScan(targetUrl, {
+                    parameters: params,
+                    endpoints: [targetUrl]
+                });
+                
+                currentScanId = response.scan_id;
+                BugHunter.addTerminalLine('scanTerminal', `[INIT] Scan ID: ${currentScanId}`, 'success');
+                BugHunter.addTerminalLine('scanTerminal', '[INIT] Polling for updates...', 'info');
+
+                // Poll for status updates
+                await BugHunter.pollScanStatus(currentScanId, updateProgress);
+                
+                // Get final results
+                const results = await BugHunter.getScanResults(currentScanId);
+                displayResults(results);
+                
+            } catch (error) {
+                BugHunter.addTerminalLine('scanTerminal', `[ERROR] ${error.message}`, 'error');
+                BugHunter.showNotification('Scan failed: ' + error.message, 'error');
+            } finally {
+                document.getElementById('startScanBtn').disabled = false;
+            }
+        }
+
+        function updateProgress(status) {
+            // Update progress bar
+            const progress = Math.round(status.progress * 100);
+            document.getElementById('progressBar').style.width = progress + '%';
+            document.getElementById('progressPercent').textContent = progress + '%';
+            
+            // Update phase text
+            const phaseNames = {
+                'intelligence': 'Phase 1: Intelligence Gathering',
+                'baseline': 'Phase 2: Baseline Profiling',
+                'testing': 'Phase 3: Vulnerability Testing',
+                'validation': 'Phase 4: Validation',
+                'correlation': 'Phase 5: Correlation',
+                'reporting': 'Phase 6: Reporting'
+            };
+            document.getElementById('phaseText').textContent = 
+                phaseNames[status.current_phase] || status.current_phase;
+            
+            // Add new log entries
+            status.logs.forEach(log => {
+                const logType = log.includes('✓') || log.includes('confirmed') ? 'success' :
+                               log.includes('ERROR') || log.includes('error') ? 'error' :
+                               log.includes('WARNING') || log.includes('Suppressed') ? 'warning' : 'info';
+                BugHunter.addTerminalLine('scanTerminal', log, logType);
+            });
+        }
+
+        function displayResults(results) {
+            document.getElementById('resultsSection').classList.add('active');
+            
+            // Overview
+            document.getElementById('confirmedCount').textContent = results.confirmed_vulnerabilities.length;
+            document.getElementById('suppressedCount').textContent = results.suppressed_findings.length;
+            document.getElementById('overallConfidence').textContent = 
+                Math.round(results.overall_confidence * 100) + '%';
+            
+            // Baseline metrics
+            if (results.baseline_metrics && results.baseline_metrics.sample_count > 0) {
+                document.getElementById('sampleCount').textContent = results.baseline_metrics.sample_count;
+                document.getElementById('meanTime').textContent = 
+                    results.baseline_metrics.mean_response_time.toFixed(3) + 's';
+                document.getElementById('stddevTime').textContent = 
+                    results.baseline_metrics.stddev_response_time.toFixed(3) + 's';
+                document.getElementById('meanLength').textContent = 
+                    Math.round(results.baseline_metrics.mean_content_length) + ' bytes';
+            }
+            
+            // Confirmed vulnerabilities
+            const vulnContainer = document.getElementById('vulnerabilitiesContainer');
+            vulnContainer.innerHTML = '';
+            if (results.confirmed_vulnerabilities.length > 0) {
+                const vulnCard = document.createElement('div');
+                vulnCard.className = 'card mb-3';
+                vulnCard.innerHTML = `
+                    <div class="card-header">
+                        <h3 class="card-title">🔴 Confirmed Vulnerabilities</h3>
+                    </div>
+                    <div class="card-body" id="vulnList"></div>
+                `;
+                vulnContainer.appendChild(vulnCard);
+                
+                results.confirmed_vulnerabilities.forEach(vuln => {
+                    const vulnEl = document.createElement('div');
+                    vulnEl.className = 'vulnerability-card';
+                    vulnEl.innerHTML = `
+                        <div class="flex-between mb-2">
+                            <strong>${vuln.type.toUpperCase()} in ${vuln.parameter}</strong>
+                            <span class="badge badge-danger">${vuln.severity}</span>
+                        </div>
+                        <div class="mb-2">
+                            <strong>Confidence:</strong> ${Math.round(vuln.confidence * 100)}%
+                            <strong class="ml-2">Signals:</strong> ${vuln.signal_count}
+                            <strong class="ml-2">Reproducibility:</strong> ${vuln.reproducibility_count}/3
+                        </div>
+                        <div class="mb-2">
+                            <strong>PoC:</strong><br>
+                            <code class="code-block">${vuln.poc}</code>
+                        </div>
+                        <div>
+                            <strong>Evidence:</strong><br>
+                            ${vuln.evidence.map(e => `<div class="text-secondary">• ${e}</div>`).join('')}
+                        </div>
+                    `;
+                    document.getElementById('vulnList').appendChild(vulnEl);
+                });
+            }
+            
+            // Suppressed findings
+            const suppContainer = document.getElementById('suppressedContainer');
+            suppContainer.innerHTML = '';
+            if (results.suppressed_findings.length > 0) {
+                const suppCard = document.createElement('div');
+                suppCard.className = 'card mb-3';
+                suppCard.innerHTML = `
+                    <div class="card-header">
+                        <h3 class="card-title">⚠ Suppressed Findings (False Positives)</h3>
+                    </div>
+                    <div class="card-body" id="suppList"></div>
+                `;
+                suppContainer.appendChild(suppCard);
+                
+                results.suppressed_findings.forEach(finding => {
+                    const suppEl = document.createElement('div');
+                    suppEl.className = 'suppressed-finding';
+                    suppEl.innerHTML = `
+                        <div class="flex-between mb-2">
+                            <strong>${finding.type.toUpperCase()} in ${finding.parameter}</strong>
+                            <span class="badge badge-warning">SUPPRESSED</span>
+                        </div>
+                        <div class="text-secondary">
+                            <strong>Reason:</strong> ${finding.suppression_reason}
+                        </div>
+                    `;
+                    document.getElementById('suppList').appendChild(suppEl);
+                });
+            }
+            
+            BugHunter.showNotification('Scan completed successfully!', 'success');
+        }
+    </script>
+</body>
+</html>

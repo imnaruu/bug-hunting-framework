@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Phase 2: Behavioral Baseline - Bug Hunter Framework</title>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="logo">BUG HUNTER</div>
+                <div class="logo-subtitle">Security Framework v1.0</div>
+            </div>
+            
+            <nav class="nav-menu">
+                <div class="nav-section">
+                    <div class="nav-section-title">Main</div>
+                    <a href="index.html" class="nav-link">
+                        <span class="nav-icon">◈</span>
+                        <span>Dashboard</span>
+                    </a>
+                </div>
+                
+                <div class="nav-section">
+                    <div class="nav-section-title">Testing Phases</div>
+                    <a href="recon.html" class="nav-link">
+                        <span class="nav-icon">◉</span>
+                        <span>Phase 1: Recon</span>
+                    </a>
+                    <a href="baseline.html" class="nav-link">
+                        <span class="nav-icon">◉</span>
+                        <span>Phase 2: Baseline</span>
+                    </a>
+                    <a href="testing.html" class="nav-link">
+                        <span class="nav-icon">◉</span>
+                        <span>Phase 3: Testing</span>
+                    </a>
+                    <a href="correlation.html" class="nav-link">
+                        <span class="nav-icon">◉</span>
+                        <span>Phase 4: Correlation</span>
+                    </a>
+                    <a href="reports.html" class="nav-link">
+                        <span class="nav-icon">◉</span>
+                        <span>Phase 5: Reports</span>
+                    </a>
+                </div>
+                
+                <div class="nav-section">
+                    <div class="nav-section-title">System</div>
+                    <a href="settings.html" class="nav-link">
+                        <span class="nav-icon">⚙</span>
+                        <span>Settings</span>
+                    </a>
+                </div>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Top Header -->
+            <header class="top-header">
+                <div class="breadcrumb">
+                    <a href="index.html" class="breadcrumb-item">Home</a>
+                    <span class="breadcrumb-separator">/</span>
+                    <span class="breadcrumb-item">Phase 2: Behavioral Baseline</span>
+                </div>
+                
+                <div class="header-actions">
+                    <div class="status-indicator">
+                        <span class="status-dot"></span>
+                        <span>Baseline Active</span>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Page Content -->
+            <div class="content-container">
+                <!-- Page Header -->
+                <div class="page-header">
+                    <h1 class="page-title">📊 Phase 2: Behavioral Baseline Analysis</h1>
+                    <p class="page-subtitle">Establish normal application behavior before attack testing</p>
+                </div>
+
+                <!-- Response Profile Overview -->
+                <div class="grid grid-3">
+                    <div class="stat-card">
+                        <div class="stat-value">247ms</div>
+                        <div class="stat-label">Avg Response Time</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value">156</div>
+                        <div class="stat-label">Requests Analyzed</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value">12</div>
+                        <div class="stat-label">Endpoints Profiled</div>
+                    </div>
+                </div>
+
+                <!-- Timing Baseline Charts -->
+                <div class="card">
+                    <div class="card-header">
+                        <h2 class="card-title">⏱ Response Timing Baseline</h2>
+                        <span class="badge badge-success">STABLE</span>
+                    </div>
+                    <div class="card-body">
+                        <div class="mb-3">
+                            <strong>Performance Characteristics:</strong>
+                            <div class="grid grid-2 mt-2">
+                                <div>
+                                    <div class="text-secondary mb-1">Minimum Response: <span class="monospace text-primary">89ms</span></div>
+                                    <div class="text-secondary mb-1">Maximum Response: <span class="monospace text-primary">1,245ms</span></div>
+                                    <div class="text-secondary mb-1">Standard Deviation: <span class="monospace text-primary">±127ms</span></div>
+                                </div>
+                                <div>
+                                    <div class="text-secondary mb-1">P50 (Median): <span class="monospace text-primary">235ms</span></div>
+                                    <div class="text-secondary mb-1">P95: <span class="monospace text-primary">456ms</span></div>
+                                    <div class="text-secondary mb-1">P99: <span class="monospace text-primary">892ms</span></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Simulated Chart Display -->
+                        <div style="background: var(--bg-secondary); padding: 2rem; border-radius: 8px; border: 1px solid var(--border-color);">
+                            <div style="text-align: center; color: var(--text-secondary);">
+                                📈 <strong>Response Time Distribution</strong>
+                            </div>
+                            <div class="code-block mt-2">
+    0-100ms:  ████████░░░░░░░░░░░░ 40%
+  100-200ms:  ██████████████░░░░░░ 70%
+  200-300ms:  ████████████████████ 100%
+  300-500ms:  ██████████░░░░░░░░░░ 50%
+  500-1000ms: ████░░░░░░░░░░░░░░░░ 20%
+     >1000ms: ██░░░░░░░░░░░░░░░░░░ 10%
+                            </div>
+                        </div>
+
+                        <div class="mt-3">
+                            <strong class="text-primary">⚠ Anomaly Detection Threshold:</strong>
+                            <div class="text-secondary mt-1">
+                                Requests exceeding <span class="monospace" style="color: var(--neon-red);">500ms</span> will be flagged for investigation.
+                                Baseline suggests time-based blind injection techniques should target this threshold.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Status Code Distribution -->
+                <div class="card">
+                    <div class="card-header">
+                        <h2 class="card-title">📡 HTTP Status Code Distribution</h2>
+                    </div>
+                    <div class="card-body">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Status Code</th>
+                                    <th>Count</th>
+                                    <th>Percentage</th>
+                                    <th>Response Time Avg</th>
+                                    <th>Notes</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><span class="badge badge-success">200 OK</span></td>
+                                    <td class="monospace">142</td>
+                                    <td class="monospace">91.0%</td>
+                                    <td class="monospace">235ms</td>
+                                    <td class="text-secondary">Normal success responses</td>
+                                </tr>
+                                <tr>
+                                    <td><span class="badge badge-warning">301 Redirect</span></td>
+                                    <td class="monospace">7</td>
+                                    <td class="monospace">4.5%</td>
+                                    <td class="monospace">89ms</td>
+                                    <td class="text-secondary">HTTPS redirects</td>
+                                </tr>
+                                <tr>
+                                    <td><span class="badge badge-danger">403 Forbidden</span></td>
+                                    <td class="monospace">4</td>
+                                    <td class="monospace">2.6%</td>
+                                    <td class="monospace">112ms</td>
+                                    <td class="text-secondary">Admin endpoints blocked</td>
+                                </tr>
+                                <tr>
+                                    <td><span class="badge badge-danger">404 Not Found</span></td>
+                                    <td class="monospace">2</td>
+                                    <td class="monospace">1.3%</td>
+                                    <td class="monospace">98ms</td>
+                                    <td class="text-secondary">Invalid paths</td>
+                                </tr>
+                                <tr>
+                                    <td><span class="badge badge-danger">500 Error</span></td>
+                                    <td class="monospace">1</td>
+                                    <td class="monospace">0.6%</td>
+                                    <td class="monospace">1,245ms</td>
+                                    <td class="text-secondary">⚠ Error condition detected</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <div class="alert alert-danger mt-3">
+                            <span class="alert-icon">⚠</span>
+                            <div>
+                                <strong>Error Pattern Detected:</strong> 500 error with significantly longer response time (1,245ms) suggests 
+                                potential for error-based attacks. Investigate triggering conditions during testing phase.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Header Analysis -->
+                <div class="card">
+                    <div class="card-header">
+                        <h2 class="card-title">📋 Response Header Analysis</h2>
+                    </div>
+                    <div class="card-body">
+                        <div class="grid grid-2">
+                            <div>
+                                <h3 style="color: var(--neon-green); margin-bottom: 1rem;">Security Headers Present:</h3>
+                                <div class="mb-2">
+                                    <span class="badge badge-success">✓</span>
+                                    <span class="monospace ml-2">X-Content-Type-Options: nosniff</span>
+                                </div>
+                                <div class="mb-2">
+                                    <span class="badge badge-success">✓</span>
+                                    <span class="monospace ml-2">X-Frame-Options: DENY</span>
+                                </div>
+                                <div class="mb-2">
+                                    <span class="badge badge-success">✓</span>
+                                    <span class="monospace ml-2">Strict-Transport-Security: max-age=31536000</span>
+                                </div>
+                            </div>
+
+                            <div>
+                                <h3 style="color: var(--neon-red); margin-bottom: 1rem;">Missing Security Headers:</h3>
+                                <div class="mb-2">
+                                    <span class="badge badge-danger">✗</span>
+                                    <span class="monospace ml-2">Content-Security-Policy</span>
+                                </div>
+                                <div class="mb-2">
+                                    <span class="badge badge-danger">✗</span>
+                                    <span class="monospace ml-2">X-XSS-Protection</span>
+                                </div>
+                                <div class="mb-2">
+                                    <span class="badge badge-warning">⚠</span>
+                                    <span class="monospace ml-2">Referrer-Policy (weak)</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="code-block mt-3">
+# Sample Response Headers
+HTTP/1.1 200 OK
+Server: nginx/1.18.0
+Date: Thu, 07 Feb 2024 12:34:56 GMT
+Content-Type: application/json; charset=utf-8
+Content-Length: 1247
+Connection: keep-alive
+X-Powered-By: Express
+X-Content-Type-Options: nosniff
+X-Frame-Options: DENY
+Strict-Transport-Security: max-age=31536000
+Set-Cookie: sessionId=abc123; Path=/; HttpOnly
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Cookie Analysis -->
+                <div class="card">
+                    <div class="card-header">
+                        <h2 class="card-title">🍪 Cookie Analysis</h2>
+                    </div>
+                    <div class="card-body">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Cookie Name</th>
+                                    <th>Secure</th>
+                                    <th>HttpOnly</th>
+                                    <th>SameSite</th>
+                                    <th>Domain</th>
+                                    <th>Security Rating</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="monospace">sessionId</td>
+                                    <td><span class="badge badge-success">✓</span></td>
+                                    <td><span class="badge badge-success">✓</span></td>
+                                    <td><span class="badge badge-danger">None</span></td>
+                                    <td class="monospace">.example.com</td>
+                                    <td><span class="badge badge-warning">MEDIUM</span></td>
+                                </tr>
+                                <tr>
+                                    <td class="monospace">csrf_token</td>
+                                    <td><span class="badge badge-success">✓</span></td>
+                                    <td><span class="badge badge-danger">✗</span></td>
+                                    <td><span class="badge badge-success">Strict</span></td>
+                                    <td class="monospace">example.com</td>
+                                    <td><span class="badge badge-warning">MEDIUM</span></td>
+                                </tr>
+                                <tr>
+                                    <td class="monospace">_ga</td>
+                                    <td><span class="badge badge-danger">✗</span></td>
+                                    <td><span class="badge badge-danger">✗</span></td>
+                                    <td><span class="badge badge-danger">None</span></td>
+                                    <td class="monospace">.example.com</td>
+                                    <td><span class="badge badge-danger">LOW</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <div class="alert alert-warning mt-3">
+                            <span class="alert-icon">⚠</span>
+                            <div>
+                                <strong>Cookie Security Issues:</strong> Session cookie lacks SameSite attribute (CSRF risk). 
+                                CSRF token is not HttpOnly (XSS could steal token). Consider testing CSRF and session attacks.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- CORS Configuration -->
+                <div class="grid grid-2">
+                    <div class="card">
+                        <div class="card-header">
+                            <h2 class="card-title">🌐 CORS Configuration</h2>
+                            <span class="badge badge-warning">PERMISSIVE</span>
+                        </div>
+                        <div class="card-body">
+                            <div class="code-block">
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Methods: GET, POST, PUT, DELETE
+Access-Control-Allow-Headers: *
+Access-Control-Allow-Credentials: true
+                            </div>
+                            <div class="alert alert-danger mt-2">
+                                <span class="alert-icon">⚠</span>
+                                <div>
+                                    <strong>HIGH RISK:</strong> Wildcard origin (*) with credentials enabled. 
+                                    Test for cross-origin data theft and CORS misconfiguration attacks.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-header">
+                            <h2 class="card-title">🛡 CSP Analysis</h2>
+                            <span class="badge badge-danger">MISSING</span>
+                        </div>
+                        <div class="card-body">
+                            <div class="text-secondary mb-2">
+                                <strong>Content-Security-Policy:</strong> Not Implemented
+                            </div>
+                            <div class="alert alert-danger">
+                                <span class="alert-icon">⚠</span>
+                                <div>
+                                    <strong>CRITICAL:</strong> No CSP header detected. Application is vulnerable to:
+                                    <ul style="margin-top: 0.5rem; margin-left: 1.5rem;">
+                                        <li>Reflected XSS attacks</li>
+                                        <li>DOM-based XSS</li>
+                                        <li>Malicious script injection</li>
+                                        <li>Data exfiltration</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="mt-2">
+                                <strong>Recommendation:</strong>
+                                <div class="code-block mt-1">
+Content-Security-Policy: default-src 'self'; 
+script-src 'self' 'unsafe-inline'; 
+style-src 'self' 'unsafe-inline';
+img-src 'self' data: https:;
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Error Pattern Analysis -->
+                <div class="card glow-red">
+                    <div class="card-header">
+                        <h2 class="card-title">🔍 Error Pattern Mapping</h2>
+                    </div>
+                    <div class="card-body">
+                        <h3 style="color: var(--neon-green); margin-bottom: 1rem;">Identified Error Behaviors:</h3>
+                        
+                        <div class="mb-3">
+                            <div class="flex-between mb-2">
+                                <strong class="risk-high">1. SQL Error Disclosure</strong>
+                                <span class="badge badge-danger">HIGH RISK</span>
+                            </div>
+                            <div class="text-secondary mb-2">
+                                <strong>Trigger:</strong> Special characters in search parameter (', ", \)
+                            </div>
+                            <div class="code-block">
+Response: 500 Internal Server Error
+Body: "Error: ER_PARSE_ERROR: You have an error in your SQL syntax..."
+Time: 1,245ms (significantly above baseline)
+                            </div>
+                            <div class="mt-2 text-secondary">
+                                <strong>Testing Opportunity:</strong> SQL injection likely. Error messages reveal database type (MySQL).
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <div class="flex-between mb-2">
+                                <strong class="risk-medium">2. Path Traversal Response</strong>
+                                <span class="badge badge-warning">MEDIUM RISK</span>
+                            </div>
+                            <div class="text-secondary mb-2">
+                                <strong>Trigger:</strong> ../ sequences in file parameter
+                            </div>
+                            <div class="code-block">
+Response: 403 Forbidden
+Body: "Access denied to path: /etc/passwd"
+Time: 112ms (normal)
+                            </div>
+                            <div class="mt-2 text-secondary">
+                                <strong>Testing Opportunity:</strong> File path validation exists but may be bypassable.
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <div class="flex-between mb-2">
+                                <strong class="risk-medium">3. Template Engine Errors</strong>
+                                <span class="badge badge-warning">MEDIUM RISK</span>
+                            </div>
+                            <div class="text-secondary mb-2">
+                                <strong>Trigger:</strong> Template syntax in user input ({{ }}, ${ })
+                            </div>
+                            <div class="code-block">
+Response: 500 Internal Server Error
+Body: "ReferenceError: username is not defined"
+Time: 567ms
+                            </div>
+                            <div class="mt-2 text-secondary">
+                                <strong>Testing Opportunity:</strong> Server-Side Template Injection (SSTI) potential.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Baseline Summary -->
+                <div class="card">
+                    <div class="card-header">
+                        <h2 class="card-title">📊 Baseline Summary & Testing Recommendations</h2>
+                    </div>
+                    <div class="card-body">
+                        <div class="grid grid-2">
+                            <div>
+                                <h3 style="color: var(--neon-green); margin-bottom: 1rem;">Key Findings:</h3>
+                                <ul style="margin-left: 1.5rem; color: var(--text-secondary);">
+                                    <li>Stable response times (247ms avg)</li>
+                                    <li>SQL errors disclosed in responses</li>
+                                    <li>Missing CSP header</li>
+                                    <li>Permissive CORS configuration</li>
+                                    <li>Cookie security weaknesses</li>
+                                    <li>Template engine errors visible</li>
+                                </ul>
+                            </div>
+                            <div>
+                                <h3 style="color: var(--neon-green); margin-bottom: 1rem;">Priority Attack Vectors:</h3>
+                                <ol style="margin-left: 1.5rem; color: var(--text-secondary);">
+                                    <li>SQL Injection (error-based)</li>
+                                    <li>Cross-Site Scripting (no CSP)</li>
+                                    <li>CSRF (cookie issues)</li>
+                                    <li>SSTI (template errors)</li>
+                                    <li>CORS misconfiguration</li>
+                                </ol>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Actions -->
+                <div class="card">
+                    <div class="card-body flex gap-2">
+                        <a href="testing.html" class="btn btn-primary">
+                            <span>➜</span>
+                            <span>Proceed to Phase 3: Testing</span>
+                        </a>
+                        <button class="btn btn-secondary" onclick="location.reload()">
+                            <span>🔄</span>
+                            <span>Re-run Baseline</span>
+                        </button>
+                        <button class="btn btn-secondary">
+                            <span>💾</span>
+                            <span>Export Baseline Data</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="../js/app.js"></script>
+</body>
+</html>
