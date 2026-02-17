@@ -15,7 +15,8 @@ from backend.api.routes import (
     baseline_router,
     testing_router,
     correlation_router,
-    reports_router
+    reports_router,
+    scan_router
 )
 
 
@@ -57,6 +58,7 @@ app.add_middleware(
 
 # Include API routers
 app.include_router(health_router, prefix="/api")
+app.include_router(scan_router, prefix="/api")
 app.include_router(recon_router, prefix="/api")
 app.include_router(baseline_router, prefix="/api")
 app.include_router(testing_router, prefix="/api")

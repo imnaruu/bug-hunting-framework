@@ -146,18 +146,6 @@ function updateStatus(isOnline) {
     }
 }
 
-// Simulate API call
-async function mockApiCall(endpoint, delay = 1000) {
-    return new Promise((resolve) => {
-        setTimeout(() => {
-            resolve({
-                success: true,
-                data: { message: `Response from ${endpoint}` }
-            });
-        }, delay);
-    });
-}
-
 // ============================================
 // API Integration Functions
 // ============================================
@@ -340,6 +328,66 @@ async function getConfidenceScore(findingId) {
     return await apiCall(`/reports/confidence/${findingId}`);
 }
 
+// ============================================
+// Production Scan API Functions
+// ============================================
+
+// Start a complete production-grade scan
+async function startScan(targetUrl, options = {}) {
+    return await apiCall('/scan/start', 'POST', {
+        target_url: targetUrl,
+        endpoints: options.endpoints || null,
+        parameters: options.parameters || null,
+        scan_options: options.scan_options || null
+    });
+}
+
+// Get real-time scan status
+async function getScanStatus(scanId) {
+    return await apiCall(`/scan/status/${scanId}`);
+}
+
+// Get complete scan results
+async function getScanResults(scanId) {
+    return await apiCall(`/scan/results/${scanId}`);
+}
+
+// List all scans
+async function listScans() {
+    return await apiCall('/scan/list');
+}
+
+// Poll scan status until complete
+async function pollScanStatus(scanId, onProgress, intervalMs = 2000) {
+    return new Promise((resolve, reject) => {
+        const checkStatus = async () => {
+            try {
+                const status = await getScanStatus(scanId);
+                
+                // Call progress callback
+                if (onProgress) {
+                    onProgress(status);
+                }
+                
+                // Check if scan is complete
+                if (status.status === 'completed') {
+                    resolve(status);
+                } else if (status.status === 'failed' || status.status === 'cancelled') {
+                    reject(new Error(`Scan ${status.status}: ${status.errors.join(', ')}`));
+                } else {
+                    // Continue polling
+                    setTimeout(checkStatus, intervalMs);
+                }
+            } catch (error) {
+                reject(error);
+            }
+        };
+        
+        // Start polling
+        checkStatus();
+    });
+}
+
 // Initialize on page load
 document.addEventListener('DOMContentLoaded', () => {
     setActiveNav();
@@ -369,7 +417,6 @@ window.BugHunter = {
     clearTerminal,
     showNotification,
     updateStatus,
-    mockApiCall,
     // API functions
     apiCall,
     checkHealth,
@@ -393,5 +440,11 @@ window.BugHunter = {
     getReports,
     getReport,
     logRetest,
-    getConfidenceScore
+    getConfidenceScore,
+    // Production scan functions
+    startScan,
+    getScanStatus,
+    getScanResults,
+    listScans,
+    pollScanStatus
 };
