@@ -146,6 +146,27 @@ function updateStatus(isOnline) {
     }
 }
 
+// Show helpful message when backend is offline
+function showBackendOfflineMessage() {
+    const message = `
+        <div style="max-width: 600px;">
+            <strong>Backend Server Not Running</strong><br><br>
+            The backend server is not running. Please start it using:<br><br>
+            <code style="background: #0a0e1a; padding: 10px; display: block; margin: 10px 0; border-radius: 4px;">
+                ./start.sh
+            </code>
+            Or manually:<br>
+            <code style="background: #0a0e1a; padding: 10px; display: block; margin: 10px 0; border-radius: 4px;">
+                python3 -m backend.main
+            </code>
+            <br>
+            Then refresh this page.
+        </div>
+    `;
+    showNotification(message, 'error');
+}
+
+
 // ============================================
 // API Integration Functions
 // ============================================
@@ -394,8 +415,12 @@ document.addEventListener('DOMContentLoaded', () => {
     initTabs();
     
     // Check API health on load
-    checkHealth().catch(() => {
-        console.error('API health check failed');
+    checkHealth().catch((error) => {
+        console.error('API health check failed:', error);
+        // Show helpful message after a short delay
+        setTimeout(() => {
+            showBackendOfflineMessage();
+        }, 500);
     });
     
     // Add event listener for mobile menu
@@ -417,6 +442,7 @@ window.BugHunter = {
     clearTerminal,
     showNotification,
     updateStatus,
+    showBackendOfflineMessage,
     // API functions
     apiCall,
     checkHealth,
